@@ -3,7 +3,6 @@
   const themeBtn = document.querySelector('[data-theme-toggle]');
   const langBtn = document.querySelector('[data-lang-toggle]');
   const dictionary = window.LIA_TRANSLATIONS || {};
-  const navZh = { Projects: '项目', Notes: '文章', Timeline: '时间轴', Stack: '技术栈' };
 
   const readSetting = (key) => { try { return localStorage.getItem(key); } catch (_) { return null; } };
   const saveSetting = (key, value) => { try { localStorage.setItem(key, value); } catch (_) {} };
@@ -30,7 +29,7 @@
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   while (walker.nextNode()) {
     const node = walker.currentNode;
-    if (!node.nodeValue.trim() || node.parentElement.closest('script,style,noscript')) continue;
+    if (!node.nodeValue.trim() || !node.parentElement || node.parentElement.closest('script,style,noscript,[data-lang-toggle],[data-theme-toggle]')) continue;
     originals.set(node, node.nodeValue);
   }
   const initialTitle = document.title;
@@ -47,13 +46,11 @@
   function switchLanguage(lang) {
     const english = lang === 'en';
     for (const [node, original] of originals) {
+      // Controls can replace their own text nodes; never process detached nodes.
+      if (!node.isConnected) continue;
       const source = original.trim();
-      let target = source;
-      if (english && Object.prototype.hasOwnProperty.call(dictionary, source)) {
-        target = dictionary[source];
-      } else if (!english && node.parentElement.closest('.nav-links') && Object.prototype.hasOwnProperty.call(navZh, source)) {
-        target = navZh[source];
-      }
+      const target = english && Object.prototype.hasOwnProperty.call(dictionary, source)
+        ? dictionary[source] : source;
       if (target !== source) {
         const start = original.indexOf(source);
         node.nodeValue = original.slice(0, start) + target + original.slice(start + source.length);
