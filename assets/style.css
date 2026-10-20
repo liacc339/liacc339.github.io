@@ -310,3 +310,12 @@
  .architecture-node-ai{padding-bottom:15px}
  .architecture-points{margin-top:10px}
 }
+
+
+/* Urban Vitality RAG case study */
+.rag-map .architecture-node{max-width:890px;width:100%;align-self:center}
+.rag-map .architecture-node-system{border-style:solid}
+.rag-map .architecture-node-ai{background:var(--paper);border-color:var(--accent)}
+.city-preview-pending{aspect-ratio:1782/877;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(115deg,#071b30,#0a3754);border-color:#235a77;padding:24px;color:#d9f1ff;text-align:center}
+.city-preview-pending .city-preview-label{font-weight:750;font-size:22px}
+.project-case .city-preview-pending p{color:#b0c7db;font-size:14px;margin:0}
