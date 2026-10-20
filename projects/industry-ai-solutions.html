@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Lia Chen 关于 AI 解决方案在医疗、政务、企业与公共服务等行业应用的场景分析与方案笔记。">
+<title>AI 解决方案在各行各业的应用 · Lia's Notes</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site-header"><nav class="wrap nav" aria-label="主导航">
+<a class="brand" href="../index.html"><span class="user">liachen</span>@notes:~$<span aria-hidden="true" class="cursor"></span></a>
+<div class="nav-right"><div class="nav-links"><a href="../index.html#projects">Projects</a><a href="../index.html#notes">Notes</a><a href="../index.html#timeline">Timeline</a><a href="../index.html#stack">Stack</a></div><button type="button" class="theme-btn" data-theme-toggle aria-label="切换深浅色模式">☾</button></div>
+</nav></header>
+<main class="detail">
+<a class="back" href="../index.html#projects">← 返回 My Projects</a>
+<div class="kicker">ONGOING COLLECTION / INDUSTRY AI SOLUTIONS</div>
+<h1>AI 解决方案在各行各业的应用</h1>
+<p class="lead">我想研究的不是“每个行业能接入多少 AI 功能”，而是：<strong>真正费时、费力、容易出错的环节在哪里？哪些适合 AI，哪些更应该交给明确的业务规则？</strong> 这是一份持续更新的行业场景与方案观察。</p>
+<div class="tags"><span class="tag">行业观察</span><span class="tag">需求拆解</span><span class="tag">AI 应用方案</span><span class="tag">持续更新</span></div>
+<div class="callout"><strong>内容说明：</strong>以下是场景分析和可行性方案草案，并非每一个场景都已开发或交付。我的独立 POC 请见首页的另两个项目。</div>
+<hr>
+<section><h2>我怎么判断一个场景值不值得做 AI？</h2>
+<p>先走进业务流程，了解谁在处理任务、每天做多少次、为什么慢或容易错，再判断 AI 能否有效介入。对于有明确条件和硬性规则的部分，我倾向先把规则梳理清楚；对于理解需求、归纳资料、生成初稿等环节，再考虑大模型、RAG、Workflow 或 Agent。</p>
+<p>方案要落地，还需要看数据从哪里来、能否接入现有业务系统、权限与安全边界如何划分，以及最终用什么指标验证有效。</p></section>
+<section><h2>01 / 政务 · 办事导引与材料准备</h2>
+<p><strong>业务问题：</strong>申请人不知道该办哪个事项、是否符合条件，材料反复补交，窗口人员需要重复解释。</p>
+<p><strong>AI 介入：</strong>用自然语言理解办事意图，围绕条件逐步追问，连接现行办事指南与材料要求，形成个性化清单。</p>
+<p><strong>关键边界：</strong>资格判定与政策条件应以权威、版本有效的规则和制度为准，不能让模型凭印象作出最终认定。可评估答复准确性、材料准备一次通过情况及人工咨询量。</p></section>
+<section><h2>02 / 医疗 · 非诊断性的就诊服务助手</h2>
+<p><strong>业务问题：</strong>患者不熟悉挂号、检查预约、院内路线及就诊准备要求，重复咨询较多。</p>
+<p><strong>AI 介入：</strong>将院内服务指南、科室位置、预约规则与常见问题组织为知识库，提供自然语言查询与流程引导。</p>
+<p><strong>关键边界：</strong>服务信息查询不等于医学诊断，涉及急症、临床判断或治疗建议时应交由专业医务人员。可评估信息正确率、人工转接率与服务效率。</p></section>
+<section><h2>03 / 企业 · 内部制度与业务知识查询</h2>
+<p><strong>业务问题：</strong>制度文件分散、版本不一，新员工需要反复找人询问，答案依赖个人经验。</p>
+<p><strong>AI 介入：</strong>建设有版本管理的知识库，利用检索与引用功能回答问题；涉及需要执行操作的事项，再按权限接入相应系统工具。</p>
+<p><strong>关键边界：</strong>知识更新、访问权限、答案溯源和错误反馈机制比单纯选择某个模型更重要。可评估有依据回答率、首次解决率及人工核对成本。</p></section>
+<section><h2>04 / 公共文化 · 课程运营与智能排课</h2>
+<p><strong>业务问题：</strong>课程规划需要考虑教师、教室、时间与招生情况，既有固定规则，又有需要运营人员判断的部分。</p>
+<p><strong>AI 介入：</strong>将确定的排课约束交给规则与工作流，利用 AI 辅助理解需求、提出候选方案与生成运营报告。</p>
+<p><strong>实践关联：</strong>这一方向已有我制作的 <a href="course-operations.html">公共文化课程运营智能助手 POC</a>，可进一步了解具体原型与技术路径。</p></section>
+<hr>
+<section><h2>接下来会写什么</h2><p>我会逐步为不同场景补充实际流程图、系统边界、技术选型、验证方法和方案取舍。内容不断完善，但每条都尽量回答同一个问题：<strong>这个 AI 应用究竟解决了什么业务问题？</strong></p></section>
+<div class="footer-detail">© <span data-year>2026</span> Lia Chen · 场景研究与方案笔记，持续更新。</div>
+</main><script src="../assets/main.js" defer></script></body></html>
