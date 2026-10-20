@@ -98,3 +98,48 @@
 .project-card-link:hover .text-link{color:var(--accent);text-decoration:underline}
 .project-demo-link{display:inline-flex;align-items:center;padding:10px 16px;border-radius:7px;background:var(--accent);color:#fff!important;font-weight:700;font-size:14px;text-decoration:none!important}
 .project-demo-link:hover{opacity:.88}
+
+
+/* Readability v5: increase content type scale; keep hero typography intact */
+.site-header .brand{font-size:13px}
+.site-header .nav-links a{font-size:14px}
+.site-header .lang-btn{font-size:14px}
+.section-head h2{font-size:24px}
+.section-head .h-sub{font-size:13px}
+#projects .section-head h2,#notes .section-head h2{font-size:30px}
+.section-note{font-size:15px;line-height:1.85}
+.project-info h3{font-size:20px}
+.project-info p{font-size:15px;line-height:1.85}
+.overline{font-size:12px}
+.tag{font-size:12px}
+.text-link{font-size:14px}
+.note-copy h3{font-size:21px}
+.note-copy p{font-size:15px;line-height:1.85}
+.note-number,.note-topic{font-size:12px}
+.time-date{font-size:12px}
+.time h3{font-size:17px}
+.time p{font-size:15px;line-height:1.8}
+.stack-pill{font-size:14px}
+.about-card p{font-size:15px;line-height:1.95}
+.endnote,.footer-detail{font-size:13px}
+.back{font-size:14px}
+.detail .kicker{font-size:12px}
+.detail h1{font-size:clamp(28px,4vw,38px)}
+.detail h2{font-size:21px}
+.detail .lead{font-size:17px}
+.detail p,.detail li{font-size:16px;line-height:1.9}
+.detail .callout{font-size:15px;line-height:1.9}
+.detail .project-demo-link{font-size:15px}
+@media(max-width:720px){
+  .site-header .nav-links a{font-size:12px}
+  .site-header .lang-btn{font-size:12px}
+  .section-head h2{font-size:22px}
+  #projects .section-head h2,#notes .section-head h2{font-size:26px}
+  .section-head .h-sub{font-size:12px}
+  .note-copy h3{font-size:19px}
+  .project-info h3{font-size:19px}
+  .project-info p,.note-copy p,.about-card p{font-size:15px}
+  .detail p,.detail li{font-size:15px}
+  .detail .lead{font-size:16px}
+  .detail h2{font-size:20px}
+}
