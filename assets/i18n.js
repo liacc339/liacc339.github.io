@@ -151,5 +151,15 @@ window.LIA_TRANSLATIONS = {
   "这个 AI 应用究竟解决了什么业务问题？": "What business problem does this AI application actually solve?",
   "场景研究与方案笔记，持续更新。": "Industry scenarios and solution notes, continuously updated.",
   "业务分析笔记": "Business analysis notes",
-  "场景分析": "Scenario analysis"
+  "场景分析": "Scenario analysis",
+  "项目": "Projects",
+  "文章": "Articles",
+  "时间轴": "Timeline",
+  "技术栈": "Tech Stack",
+  "AI ARCHITECTURE · 研究笔记": "AI ARCHITECTURE · Research note",
+  "BUSINESS ANALYSIS · 项目拆解": "BUSINESS ANALYSIS · Case breakdown",
+  "AI APPLICATION · 方法笔记": "AI APPLICATION · Method note",
+  "AI 公文起草辅助方案": "AI-Assisted Document Drafting Concept",
+  "效果评估": "Outcome evaluation",
+  "Lia Chen · 场景研究与方案笔记，持续更新。": "Lia Chen · Industry scenarios and solution notes, continuously updated."
 };
