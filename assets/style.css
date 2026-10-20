@@ -54,3 +54,8 @@
 .hero-bottom .status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5caa83;animation:status-pulse 1.7s ease-in-out infinite;flex:0 0 auto}
 @keyframes status-pulse{0%,100%{opacity:1}50%{opacity:.18}}
 @media(prefers-reduced-motion:reduce){.hero-bottom .status-dot{animation:none}}
+
+/* Compact spacing between intro and first section */
+.hero{padding-bottom:21px}
+#projects.section{padding-top:22px}
+@media(max-width:720px){.hero{padding-bottom:17px}#projects.section{padding-top:22px}}
