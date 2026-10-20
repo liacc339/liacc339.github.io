@@ -4,3 +4,47 @@
 @media(max-width:720px){.site-header{height:auto;min-height:62px}.nav{min-height:62px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}.nav-right{flex:1;justify-content:flex-end;gap:9px}.nav-links{gap:13px;overflow-x:auto;max-width:100%;scrollbar-width:none}.nav-links a{font-size:11px}.wrap{padding:0 18px}.brand{font-size:10px;padding:8px}.hero{padding:64px 0 44px}.intro{font-size:13px}.section{padding-top:43px}.project-card{grid-template-columns:1fr}.art{height:183px;min-height:183px;border-right:0;border-bottom:1px solid var(--line)}.project-info{padding:20px}.notes{grid-template-columns:1fr}.section-head h2{font-size:20px}.section-head .h-sub{font-size:10px}.endnote{margin-top:44px;flex-direction:column;align-items:flex-start;gap:3px}.detail{padding:25px 20px 65px} }
 @media(max-width:400px){.nav{justify-content:center}.brand{margin-right:auto}.nav-right{flex:0 0 100%;justify-content:space-between}.nav-links{gap:16px}.hero h1{font-size:29px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+/* v3 personal site: centered headings and full-width writing rows */
+.intro-follow{margin-top:10px}
+#projects .section-head,#notes .section-head{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:7px;border-bottom:0;padding-bottom:0;margin-bottom:24px;
+}
+#projects .section-head h2,#notes .section-head h2{
+  position:relative;font-size:28px;font-weight:750;letter-spacing:-.025em;
+  padding-bottom:14px;
+}
+#projects .section-head h2::after,#notes .section-head h2::after{
+  content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:42px;height:4px;border-radius:4px;background:var(--accent);
+}
+#projects .section-note,#notes .section-note{text-align:center;margin:0 auto 25px;max-width:700px}
+#projects .project-card{min-height:242px}
+#projects .project-card .art{min-height:242px}
+.art-industries{background:var(--tint)}
+.industry-mosaic{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;width:78%;max-width:230px;transform:rotate(-4deg)}
+.industry-mosaic span{display:grid;place-items:center;min-height:64px;border:1px solid var(--line);background:var(--paper);border-radius:7px;font-weight:700;font-size:14px;color:var(--muted);box-shadow:0 7px 18px rgba(0,0,0,.035)}
+.industry-mosaic span:nth-child(2){transform:translateY(8px)}
+.industry-mosaic span:nth-child(3){transform:translateY(-4px)}
+.notes{grid-template-columns:1fr;gap:16px}
+.note-card{display:grid;grid-template-columns:33% minmax(0,1fr);padding:0;min-height:205px;overflow:hidden;border-radius:10px}
+.note-visual{background:var(--tint);border-right:1px solid var(--line);padding:23px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.note-number,.note-topic{color:var(--soft);font:600 11px/1.6 'Consolas',monospace;letter-spacing:.09em}
+.note-mark{font:500 60px/1 'Georgia',serif;color:var(--muted);align-self:center;opacity:.72}
+.note-copy{padding:24px 27px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.note-copy h3{font-size:19px;margin:11px 0 10px;line-height:1.45}
+.note-copy p{font-size:13px;margin:0 0 17px;line-height:1.85}
+.note-copy .text-link{margin-top:auto}
+@media(max-width:720px){
+  #projects .section-head h2,#notes .section-head h2{font-size:24px}
+  #projects .project-card,#projects .project-card .art{min-height:0}
+  .note-card{grid-template-columns:1fr;min-height:0}
+  .note-visual{height:103px;border-right:0;border-bottom:1px solid var(--line);padding:13px 20px;display:grid;grid-template-columns:1fr auto;align-items:center}
+  .note-number{grid-column:1;grid-row:1}
+  .note-topic{grid-column:1;grid-row:2}
+  .note-mark{font-size:42px;grid-column:2;grid-row:1/span 2}
+  .note-copy{padding:20px}
+  .note-copy h3{font-size:17px}
+}
