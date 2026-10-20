@@ -162,5 +162,11 @@ window.LIA_TRANSLATIONS = {
   "效果评估": "Outcome evaluation",
   "Lia Chen · 场景研究与方案笔记，持续更新。": "Lia Chen · Industry scenarios and solution notes, continuously updated.",
   "喜欢观察世界的规律，探知万物的原理。不够聪明却仍然热爱学习。": "I love observing the patterns of the world and exploring how things work. I may not be the brightest, but I never stop loving to learn.",
-  "人生匆匆几十载，来都来了，就请尽情体验吧~": "Life is short. Since we're here, we might as well experience it to the fullest~"
+  "人生匆匆几十载，来都来了，就请尽情体验吧~": "Life is short. Since we're here, we might as well experience it to the fullest~",
+  "需求调研": "Requirements discovery",
+  "大客户沟通": "Key account communication",
+  "AI 应用架构设计": "AI application architecture design",
+  "系统集成": "System integration",
+  "CAD": "CAD",
+  "PPT": "Presentation design (PPT)"
 };
