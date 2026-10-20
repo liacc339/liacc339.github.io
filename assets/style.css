@@ -59,3 +59,29 @@
 .hero{padding-bottom:21px}
 #projects.section{padding-top:22px}
 @media(max-width:720px){.hero{padding-bottom:17px}#projects.section{padding-top:22px}}
+
+/* v4: cache-busted ocean name, tighter hero, language control */
+.hero h1 span {
+  background:linear-gradient(100deg,#087caf 0%,#008fc2 53%,#46a9d0 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero{padding-bottom:6px}
+#projects.section{padding-top:10px}
+.lang-btn{
+  flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:64px;min-height:34px;padding:5px 12px;
+  background:var(--paper);color:var(--ink);border:1px solid var(--line);
+  border-radius:99px;font-size:13px;line-height:1.4;
+}
+.lang-btn:hover{color:var(--accent);border-color:var(--accent)}
+.lang-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:720px){
+  .hero{padding-bottom:4px}
+  #projects.section{padding-top:10px}
+  .nav-right{gap:10px}
+  .nav-links{gap:12px}
+  .lang-btn{min-width:57px;min-height:32px;font-size:11px;padding:5px 9px}
+}
