@@ -48,7 +48,6 @@ window.LIA_TRANSLATIONS = {
   "原型验证": "Prototype validation",
   "RAG / 知识库": "RAG / Knowledge base",
   "我是一个好奇心很强、也喜欢主动探索的人。比起记住一个结论，我更想弄清楚它为什么成立：事物是怎样运转的，背后有什么原理，不同领域的知识又有什么联系。学习新东西常常让我兴奋，也让我愿意自己去查资料、动手尝试。": "I'm curious by nature and driven to explore. Rather than memorizing a conclusion, I want to know why it's true: how things work, what principles lie beneath them, and how ideas from different fields connect. Learning something new genuinely excites me, and I'm happy to dig into sources and try things myself.",
-  "我相信世界有规律可循，也接受它始终充满未知和不确定性。遇到暂时解释不了的事，我愿意保留问题、继续观察，并随着新的发现修正自己的理解。这里记录我的好奇、实验与思考——不只是关于 AI，也关于我想弄明白的世界。": "I believe there are patterns to discover, while accepting that much remains unknown. When something defies explanation, I'd rather keep the question open, observe, and revise my understanding as new evidence appears. This is a home for my curiosity, experiments, and thoughts—not just on AI, but on the world I want to understand.",
   "← 返回 Lia's Notes": "← Back to Lia's Notes",
   "← 返回 My Projects": "← Back to My Projects",
   "业务问题": "Business problem",
@@ -161,5 +160,7 @@ window.LIA_TRANSLATIONS = {
   "AI APPLICATION · 方法笔记": "AI APPLICATION · Method note",
   "AI 公文起草辅助方案": "AI-Assisted Document Drafting Concept",
   "效果评估": "Outcome evaluation",
-  "Lia Chen · 场景研究与方案笔记，持续更新。": "Lia Chen · Industry scenarios and solution notes, continuously updated."
+  "Lia Chen · 场景研究与方案笔记，持续更新。": "Lia Chen · Industry scenarios and solution notes, continuously updated.",
+  "喜欢观察世界的规律，探知万物的原理。不够聪明却仍然热爱学习。": "I love observing the patterns of the world and exploring how things work. I may not be the brightest, but I never stop loving to learn.",
+  "人生匆匆几十载，来都来了，就请尽情体验吧~": "Life is short. Since we're here, we might as well experience it to the fullest~"
 };
