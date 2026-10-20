@@ -203,10 +203,7 @@ window.LIA_TRANSLATIONS = {
   "界面与技术方案": "Product and architecture",
   "让产品长什么样、怎样搭建、AI 在哪里发挥作用，都能在同一屏看清。": "Explore what the product looks like, how it is built, and where AI adds value—side by side.",
   "PRODUCT PREVIEW · 运营总览": "PRODUCT PREVIEW · Operations overview",
-  "运营总览 · 真实截图待补充": "Operations overview · Screenshot coming soon",
-  "待你提供实际界面截图后替换，不使用模拟界面冒充产品画面。": "The original product screenshot will be added here. No mockup is presented as a real capture.",
   "先查看在线应用 ↗": "Explore the live app ↗",
-  "计划展示课程概览、招生风险和运营提示；另补一张智能排课模块截图。": "The planned images will show course metrics, enrollment alerts, and AI scheduling.",
   "TECHNICAL PATH · 搭建框架": "TECHNICAL PATH · Architecture",
   "前端交互": "Frontend interaction",
   "业务页面、参数输入、结果可视化": "Business interface, inputs, and visualization",
@@ -247,5 +244,8 @@ window.LIA_TRANSLATIONS = {
   "想亲自体验？": "Want to try it?",
   "已开放个人 POC 演示页面，使用样例数据，可能需要等待 Render 服务启动。": "The personal POC is open with demonstration data. It may take a moment for Render to start.",
   "打开在线 POC ↗": "Open live POC ↗",
-  "项目说明：这是个人验证原型，不代表客户生产系统已正式交付。技术说明用于展示原型实现思路。": "This is a personal validation prototype, not a claim of a delivered production system. The technical description illustrates the prototype's implementation."
+  "项目说明：这是个人验证原型，不代表客户生产系统已正式交付。技术说明用于展示原型实现思路。": "This is a personal validation prototype, not a claim of a delivered production system. The technical description illustrates the prototype's implementation.",
+  "运营总览 · 截图整理中": "Operations overview · Screenshots coming soon",
+  "这里将展示运营总览的真实截图，当前可以先打开已部署的应用体验。": "The real operations overview screenshot will appear here. Meanwhile, you can explore the deployed application.",
+  "后续还会补充智能排课模块的操作截图。": "Screenshots of the smart scheduling workflow will be added later."
 };
