@@ -34,7 +34,7 @@
   }
   const initialTitle = document.title;
   const pageTitles = {
-    '公共文化课程运营智能助手': 'Public Culture Course Operations AI Assistant',
+    '课程运营智能助手': 'Course Operations AI Assistant',
     '城市生命体征 AI 智库助手': 'Urban Vital Signs AI Knowledge Assistant',
     'AI 公文起草辅助方案': 'AI-Assisted Document Drafting Concept',
     'AI 解决方案在各行各业的应用': 'AI Applications Across Industries',
