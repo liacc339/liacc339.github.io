@@ -1,1 +1,72 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="description" content="Lia Chen 的个人网站：AI 应用解决方案、POC 作品与业务分析笔记。"><title>公共文化课程运营智能助手 · Lia's Notes</title><link rel="stylesheet" href="../assets/style.css?v=20261020r"></head><body><header class="site-header"><nav class="wrap nav" aria-label="主导航"><a class="brand" href="../index.html"><span class="user">liachen</span>@notes:~$<span aria-hidden="true" class="cursor"></span></a><div class="nav-right"><div class="nav-links"><a href="../index.html#projects">项目</a><a href="../index.html#notes">文章</a><a href="../index.html#timeline">时间轴</a><a href="../index.html#stack">技术栈</a></div><button type="button" class="lang-btn" data-lang-toggle aria-label="Switch to English">English</button><button type="button" class="theme-btn" data-theme-toggle aria-label="切换深浅色模式">☾</button></div></nav></header><main class="detail"><a class="back" href="../index.html">← 返回 Lia's Notes</a><div class="kicker">POC / AI APPLICATION</div><h1>公共文化课程运营智能助手</h1><p class="lead">一个覆盖运营总览、课程规划、智能排课、招生监测和运营报告的 AI 应用原型。重点不是让模型“自动做一切”，而是把课程规划、排课规则、招生状态和人工决策串成可验证的业务闭环。</p><div class="tags"><span class="tag">Workflow</span><span class="tag">Agent</span><span class="tag">FastAPI</span><span class="tag">SQLite</span></div><hr><section><h2>业务问题</h2><p>课程运营涉及课程规划、教师及教室资源协调、时段安排、招生状态跟踪等任务。多个环节依赖运营人员经验，容易出现信息分散、方案难比较的问题。</p></section><section><h2>我的原型尝试</h2><p>原型围绕“课程规划 → 智能排课 → 招生监测 → 运营报告”组织功能。智能排课按照约束排查冲突，给出最多三套候选方案；招生监测则根据约定阈值提醒运营人员关注异常。</p></section><section><h2>技术与设计取舍</h2><p>原型使用 FastAPI 与 SQLite 支撑业务数据，通过 Agent 和确定性 Workflow 组合处理任务：规则明确的环节优先固化流程，语言理解和报告表达再调用大模型。</p></section><section><h2>核心功能</h2><ul><li><strong>运营总览：</strong>课程数、开班状态、招生风险和热门课程。</li><li><strong>AI 课程规划：</strong>支持自然语言需求和资料输入，生成规划建议。</li><li><strong>智能排课：</strong>校验教师、场地、时间等硬约束，结合软偏好提供最多三套方案。</li><li><strong>招生监测：</strong>根据报名人数、开班门槛、容量和截止日期识别风险。</li><li><strong>运营报告：</strong>按周期汇总运营数据，辅助生成分析报告并导出。</li></ul></section><section><h2>技术架构与搭建框架</h2><p><strong>前端：</strong>HTML、CSS、JavaScript，负责业务页面、交互与结果展示。</p><p><strong>后端：</strong>Python + FastAPI，提供业务接口、规则校验和数据服务。</p><p><strong>数据库：</strong>SQLite，管理课程、教师、场地与招生演示数据。</p><p><strong>AI 层：</strong>Dify 结合 Agent / Workflow，承担自然语言理解、规划辅助和部分分析生成工作。</p><div class="callout"><strong>架构路径：</strong>用户界面 → HTTP API → FastAPI 业务服务 → SQLite 业务数据／Dify AI 工作流。硬性规则由后端确定性逻辑校验，AI 辅助处理自然语言和软偏好，结果供运营人员最终确认。</div></section><section><h2>实现路径</h2><ol><li>梳理运营流程，明确业务目标、数据输入和资源约束。</li><li>搭建课程、师资、教室等数据结构与后端规则。</li><li>设计 Agent / Workflow，区分确定性校验与 AI 处理环节。</li><li>实现前后端接口联动，测试排课冲突、招生预警与报告链路。</li><li>部署公开 POC 并根据操作反馈迭代。</li></ol></section><section><h2>在线体验</h2><p>项目已部署为可访问的个人 POC。首次访问 Render 服务可能需要等待启动，页面使用演示数据。</p><p><a class="project-demo-link" href="https://course-operations-ai-assistant-1.onrender.com/#overview" target="_blank" rel="noopener noreferrer">打开课程运营智能助手 ↗</a></p></section><div class="callout"><strong>关于这篇内容：</strong> 这是个人 POC／方案展示，不等同于声称客户系统已正式交付上线；在线体验入口见上方。</div><div class="footer-detail">© <span data-year>2026</span> Lia Chen · Personal notes and selected work.</div></main><script src="../assets/i18n.js?v=20261020p" defer></script><script src="../assets/main.js?v=20261020d" defer></script></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="description" content="Lia Chen 的个人网站：AI 应用解决方案、POC 作品与业务分析笔记。"><title>课程运营智能助手 · Lia's Notes</title><link rel="stylesheet" href="../assets/style.css?v=20261020r"></head><body><header class="site-header"><nav class="wrap nav" aria-label="主导航"><a class="brand" href="../index.html"><span class="user">liachen</span>@notes:~$<span aria-hidden="true" class="cursor"></span></a><div class="nav-right"><div class="nav-links"><a href="../index.html#projects">项目</a><a href="../index.html#notes">文章</a><a href="../index.html#timeline">时间轴</a><a href="../index.html#stack">技术栈</a></div><button type="button" class="lang-btn" data-lang-toggle aria-label="Switch to English">English</button><button type="button" class="theme-btn" data-theme-toggle aria-label="切换深浅色模式">☾</button></div></nav></header><main class="detail project-case">
+  <a class="back" href="../index.html#projects">← 返回项目列表</a>
+  <header class="case-header">
+    <div class="kicker">PERSONAL POC / AI APPLICATION</div>
+    <h1>课程运营智能助手</h1>
+    <p class="lead">面向公共文化课程运营场景，将课程规划、智能排课、招生监测与运营报告串联起来，探索业务规则和 AI 应用如何协同工作。</p>
+    <div class="tags case-tags"><span class="tag">Agent / Workflow</span><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">Dify</span></div>
+    <div class="case-actions"><a class="project-demo-link" href="https://course-operations-ai-assistant-1.onrender.com/#overview" target="_blank" rel="noopener noreferrer">在线体验 POC ↗</a><a class="case-secondary-link" href="#case-architecture">查看技术路径 ↓</a></div>
+    <p class="case-meta">个人搭建的 POC · 使用演示数据 · Render 服务首次访问可能需要等待</p>
+  </header>
+
+  <section class="case-section" id="case-architecture">
+    <div class="case-section-head"><span class="case-no">01 / SHOWCASE & ARCHITECTURE</span><h2>界面与技术方案</h2><p>让产品长什么样、怎样搭建、AI 在哪里发挥作用，都能在同一屏看清。</p></div>
+    <div class="case-showcase">
+      <div class="case-panel case-preview">
+        <div class="case-panel-label">PRODUCT PREVIEW · 运营总览</div>
+        <div class="case-image-placeholder" role="note">
+          <span class="case-screen-icon" aria-hidden="true">▣</span>
+          <strong>运营总览 · 真实截图待补充</strong>
+          <span>待你提供实际界面截图后替换，不使用模拟界面冒充产品画面。</span>
+          <a href="https://course-operations-ai-assistant-1.onrender.com/#overview" target="_blank" rel="noopener noreferrer">先查看在线应用 ↗</a>
+        </div>
+        <p class="case-preview-caption">计划展示课程概览、招生风险和运营提示；另补一张智能排课模块截图。</p>
+      </div>
+      <div class="case-panel case-tech">
+        <div class="case-panel-label">TECHNICAL PATH · 搭建框架</div>
+        <div class="case-tech-step"><div class="case-step-index">01</div><div><strong>前端交互</strong><span>HTML · CSS · JavaScript</span><p>业务页面、参数输入、结果可视化</p></div></div>
+        <div class="case-tech-arrow" aria-hidden="true">↓ API</div>
+        <div class="case-tech-step"><div class="case-step-index">02</div><div><strong>业务服务</strong><span>Python · FastAPI</span><p>业务接口、流程衔接、规则校验</p></div></div>
+        <div class="case-tech-arrow" aria-hidden="true">↓ 业务数据 / AI 调用</div>
+        <div class="case-tech-bottom">
+          <div><strong>SQLite</strong><span>课程、教师、场地、招生数据</span></div>
+          <div><strong>Dify · AI</strong><span>Agent / Workflow · 语言理解与生成</span></div>
+        </div>
+        <div class="case-architecture-note">硬性约束通过确定性逻辑校验；AI 负责辅助理解需求、分析偏好与生成建议，最终由运营人员确认。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="case-section-head"><span class="case-no">02 / BUSINESS CONTEXT</span><h2>业务问题</h2><p>课程运营涉及课程安排、师资场地资源协调、招生跟踪和周期性复盘。信息分散、约束多、人工反复比对，是这个 POC 尝试解决的实际问题。</p></div>
+    <div class="case-mini-grid">
+      <div class="case-mini"><span>01</span><h3>规划决策</h3><p>结合运营历史、居民需求和课程资源形成规划思路。</p></div>
+      <div class="case-mini"><span>02</span><h3>排课协调</h3><p>协调教师、场地和时间，并检查冲突与资源限制。</p></div>
+      <div class="case-mini"><span>03</span><h3>运营复盘</h3><p>追踪招生风险、识别热门课程并生成周期报告。</p></div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="case-section-head"><span class="case-no">03 / KEY FEATURES</span><h2>五个业务模块</h2></div>
+    <div class="case-feature-grid">
+      <div class="case-feature"><span>01 / DASHBOARD</span><h3>运营总览</h3><p>集中查看本期课程、开班情况、招生风险和热门课程。</p></div>
+      <div class="case-feature"><span>02 / PLANNING</span><h3>AI 课程规划</h3><p>结合自然语言要求、参考资料和课程运营数据辅助形成规划建议。</p></div>
+      <div class="case-feature"><span>03 / SCHEDULING</span><h3>智能排课</h3><p>校验教师、场地和时段等硬约束，结合软偏好给出最多三套候选方案。</p></div>
+      <div class="case-feature"><span>04 / ENROLLMENT</span><h3>招生监测</h3><p>按照报名人数、开班门槛与截止日期识别风险并提示处理。</p></div>
+      <div class="case-feature"><span>05 / REPORTING</span><h3>运营报告</h3><p>按选定周期汇总运营表现，生成分析内容并支持导出。</p></div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="case-section-head"><span class="case-no">04 / DESIGN DECISIONS</span><h2>为什么这样设计？</h2></div>
+    <div class="case-decision"><div><span class="case-no">RULES FIRST</span><h3>确定的业务约束交给规则</h3><p>例如教师时间冲突、教室资源与人数限制，应由后端逻辑校验，而不是靠大模型猜测。</p></div><div><span class="case-no">AI WHERE IT HELPS</span><h3>非结构化问题由 AI 辅助</h3><p>例如理解自然语言需求、分析课程偏好、形成运营建议，适合在工作流中使用模型能力。</p></div></div>
+  </section>
+
+  <section class="case-section">
+    <div class="case-section-head"><span class="case-no">05 / BUILD & VALIDATE</span><h2>搭建与验证路径</h2></div>
+    <ol class="case-process"><li>业务访谈与流程拆解，明确运营人员、输入数据和目标。</li><li>设计课程、师资、场地等数据结构和业务规则。</li><li>实现 FastAPI 接口与前端操作，接入 Dify 的 AI 流程。</li><li>用排课冲突、招生预警等样例验证关键链路并迭代。</li></ol>
+    <div class="case-cta"><div><strong>想亲自体验？</strong><p>已开放个人 POC 演示页面，使用样例数据，可能需要等待 Render 服务启动。</p></div><a class="project-demo-link" href="https://course-operations-ai-assistant-1.onrender.com/#overview" target="_blank" rel="noopener noreferrer">打开在线 POC ↗</a></div>
+    <p class="case-disclaimer">项目说明：这是个人验证原型，不代表客户生产系统已正式交付。技术说明用于展示原型实现思路。</p>
+  </section>
+  <div class="footer-detail">© <span data-year>2026</span> Lia Chen · Personal prototype & solution notes.</div>
+</main><script src="../assets/i18n.js?v=20261020p" defer></script><script src="../assets/main.js?v=20261020d" defer></script></body></html>
