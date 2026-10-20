@@ -2,7 +2,7 @@
 <a class="back" href="../index.html#projects">← 返回项目列表</a>
 <header class="case-header"><div class="kicker">PERSONAL POC / RAG APPLICATION</div><h1>城市生命体征 AI 智库助手</h1>
 <p class="lead">围绕城市更新与运营管理资料，利用 RAG 将文档检索、相关片段重排与大模型问答整合成自然语言知识助手。</p>
-<div class="tags case-tags"><span class="tag">Dify Chatflow</span><span class="tag">RAG</span><span class="tag">知识库</span><span class="tag">Rerank</span><span class="tag">DeepSeek</span></div>
+<div class="tags case-tags"><span class="tag">Flask</span><span class="tag">Dify Chatflow</span><span class="tag">RAG</span><span class="tag">知识库</span><span class="tag">Rerank</span><span class="tag">DeepSeek</span></div>
 <div class="case-actions"><a class="case-secondary-link" href="#case-architecture">查看技术路线 ↓</a></div>
 <p class="case-meta">个人 RAG 原型 · 以知识检索与生成链路验证为主</p></header>
 <section class="case-section" id="case-preview"><div class="case-section-head"><span class="case-no">01 / PRODUCT PREVIEW</span><h2>界面展示</h2></div>
@@ -14,11 +14,11 @@
 <div class="architecture-connector"><span>构建 / 更新知识库</span><i aria-hidden="true">↓</i></div>
 <div class="architecture-node architecture-node-front"><div class="architecture-node-kicker">KNOWLEDGE BASE</div><strong>Dify 知识库</strong><span>文本片段与索引 · 可检索知识来源</span></div>
 <div class="architecture-connector"><span>检索相关知识片段</span><i aria-hidden="true">↑</i></div>
-<div class="architecture-node architecture-node-back"><div class="architecture-node-kicker">USER QUERY / CHATFLOW</div><strong>用户自然语言提问 → Dify Chatflow</strong><span>问题解析 · 检索参数 · 上下文组织</span></div>
-<div class="architecture-connector"><span>召回片段 → Rerank 相关性重排</span><i aria-hidden="true">↓</i></div>
-<div class="architecture-node architecture-node-ai"><div class="architecture-node-kicker">RETRIEVAL AUGMENTED GENERATION</div><strong>DeepSeek 大模型</strong><span>结合提问与检索上下文生成回答</span><small>回答依据来自检索资料，不等于模型具备实时城市数据</small></div>
+<div class="architecture-node architecture-node-back"><div class="architecture-node-kicker">WEB SERVICE / API PROXY</div><strong>用户提问 → Flask 服务端</strong><span>调用 Dify Chatflow API · 服务端保管密钥 · 会话 ID 管理 · SSE 流式返回</span></div>
+<div class="architecture-connector"><span>Dify Chatflow → 知识库召回 → Rerank 相关性重排</span><i aria-hidden="true">↓</i></div>
+<div class="architecture-node architecture-node-ai"><div class="architecture-node-kicker">RETRIEVAL AUGMENTED GENERATION</div><strong>大模型问答（DeepSeek）</strong><span>结合提问与检索上下文生成回答</span><small>回答依据来自检索资料，不等于模型具备实时城市数据</small></div>
 <div class="architecture-connector"><span>生成回答</span><i aria-hidden="true">↓</i></div>
-<div class="architecture-node architecture-node-front"><strong>前端问答展示</strong><span>知识解释 · 业务信息辅助查询 · 多轮对话</span></div>
+<div class="architecture-node architecture-node-front"><strong>网页问答界面</strong><span>知识解释 · 多轮对话 · 流式回答</span></div>
 </div>
 <div class="architecture-points"><div><strong>检索</strong><span>从知识库召回与问题相关的文档片段</span></div><div><strong>重排</strong><span>Rerank 优先筛选相关性更高的上下文</span></div><div><strong>生成</strong><span>由模型根据可用证据组织自然语言回答</span></div></div></section>
 <section class="case-section" id="case-features"><div class="case-section-head"><span class="case-no">03 / KEY CAPABILITIES</span><h2>核心能力</h2></div>
