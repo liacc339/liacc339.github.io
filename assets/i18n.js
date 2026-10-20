@@ -336,5 +336,12 @@ window.LIA_TRANSLATIONS = {
   "用问题样例验证召回与重排结果是否相关。": "Evaluate retrieval and reranking with test questions.",
   "回答依据": "Grounding",
   "减少脱离材料的推断，明确原型能力边界。": "Avoid unsupported inferences and define the prototype's boundaries.",
-  "项目说明：这是 RAG 问答验证原型，不代表已建成实时城市监控或正式生产系统。公开体验地址尚未提供。": "This RAG prototype is not a live urban monitoring or production system. A public demo link is not yet available."
+  "项目说明：这是 RAG 问答验证原型，不代表已建成实时城市监控或正式生产系统。公开体验地址尚未提供。": "This RAG prototype is not a live urban monitoring or production system. A public demo link is not yet available.",
+  "核心能力": "Core capabilities",
+  "用户提问 → Flask 服务端": "User question → Flask server",
+  "调用 Dify Chatflow API · 服务端保管密钥 · 会话 ID 管理 · SSE 流式返回": "Proxy Dify Chatflow API · Server-side credentials · Conversation ID management · SSE streaming",
+  "Dify Chatflow → 知识库召回 → Rerank 相关性重排": "Dify Chatflow → Knowledge retrieval → Rerank",
+  "大模型问答（DeepSeek）": "LLM answering (DeepSeek)",
+  "网页问答界面": "Web chat interface",
+  "知识解释 · 多轮对话 · 流式回答": "Knowledge explanations · Multi-turn conversation · Streaming responses"
 };
