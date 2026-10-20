@@ -2,7 +2,7 @@
    The original Chinese HTML stays readable without JavaScript.
    Add new strings to this table when publishing new pages. */
 window.LIA_TRANSLATIONS = {
-  "5 年解决方案经验 · AI 是火，让人类从智人变成超智人。": "5 years in solutions · AI is fire, a force that could take humanity beyond Homo sapiens.",
+  "5 年解决方案经验 | AI 是火，让人类从智人变成超智人。": "5 years in solutions · AI is fire, a force that could take humanity beyond Homo sapiens.",
   "项目与实验": "Projects & Experiments",
   "观察与思考": "Observations & Thoughts",
   "持续更新中": "Always evolving",
