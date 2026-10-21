@@ -1980,6 +1980,82 @@
       }
       node.append(details);
     }
+
+    // 一分钟上手：只从当前场景已有的步骤/前提/边界提炼建议，不捏造项目数据。
+    function starterSnippet(value,limit) {
+      var str=String(value||"").replace(/\s+/g," ").trim();
+      if(!str)return "";
+      var clauses=str.split(/[。；\n]/);
+      var first=clauses[0]||str;
+      if(first.length>limit){
+        var cut=Math.max(first.lastIndexOf("，",limit),first.lastIndexOf("、",limit));
+        first=cut>limit/2?first.slice(0,cut):first.slice(0,limit)+"…";
+      }
+      return first;
+    }
+    function starterSteps(data,scene) {
+      var tasks=data&&Array.isArray(data.tasks)?data.tasks:[];
+      if(tasks.length){
+        var first=tasks[0], last=tasks[tasks.length-1];
+        var middle=tasks.find(function(task,index){
+          if(index===0||index===tasks.length-1)return false;
+          var owner=String(task.owner||"");
+          return /AI|模型|智能|检索/.test(owner)||(task.techIds||[]).some(function(id){return /llm|rag|agent|extract|asr|ocr|workflow/.test(String(id));});
+        })||tasks[Math.floor(tasks.length/2)];
+        var indices=[first,middle,last].filter(function(task,index,arr){return task&&arr.indexOf(task)===index;});
+        return indices.map(function(task){return starterSnippet(task.name,30);}).filter(Boolean);
+      }
+      var source=data&&Array.isArray(data.path)?data.path:Array.isArray(scene.path)?scene.path:[];
+      if(source.length){
+        var selected=[source[0],source[Math.floor(source.length/2)],source[source.length-1]];
+        return selected.map(function(x){return starterSnippet(Array.isArray(x)?x[0]:x,39);}).filter(function(s,i,a){return s&&a.indexOf(s)===i;});
+      }
+      return [];
+    }
+    function appendStarterGuide(inner,data,scene,line,domain) {
+      var quick=textModule("一分钟说清怎么做");
+      quick.classList.add("starter-quick");
+      var list=el("ol","starter-step-list");
+      var steps=starterSteps(data,scene);
+      if(steps.length){
+        steps.forEach(function(step){list.append(el("li","",step));});
+      } else {
+        list.append(el("li","","确认「"+scene.name+"」对应的输入资料与要解决的问题。"));
+        list.append(el("li","","用一份经授权的脱敏样例，尝试完成单次任务并保留原始结果。"));
+        list.append(el("li","","人工对照原流程核实效果，再决定是否值得进一步研究。"));
+      }
+      quick.append(list);
+      var evidence=el("p","starter-evidence",data?"以下步骤提炼自本场景的方案与任务拆解；具体企业仍需验证。":"入门建议 · 本场景方案待深化，以下并非已验证的实施流程。");
+      quick.append(evidence);
+      inner.append(quick);
+
+      var roles=textModule("不同角色，怎么开始");
+      roles.classList.add("starter-roles");
+      var employee=el("div","starter-role-card starter-person");
+      employee.append(el("div","starter-role-kicker","普通员工 · 今天可以试"));
+      var employeeText="找一份可公开或经授权的脱敏样例，尝试「"+scene.name+"」；对照原流程检查结果、记录耗时与明显错误。正式业务数据、客户信息不要直接输入未经批准的工具。";
+      if(scene.summary){
+        employeeText="先选一份脱敏样例，围绕「"+scene.name+"」试做一轮。"+starterSnippet(scene.summary,58)+"；由自己对照原材料核实，不直接用于正式决策。";
+      }
+      employee.append(el("p","",employeeText));
+
+      var leader=el("div","starter-role-card starter-leader");
+      leader.append(el("div","starter-role-kicker","部门负责人 · 判断是否值得改"));
+      var prereq=data&&data.prereq?starterSnippet(data.prereq,95):"公司需先确认数据从哪里来、谁有访问权限、现有系统能否提供接口或可控导出";
+      var metric=data&&data.value&&Array.isArray(data.value.metrics)?starterSnippet(data.value.metrics[0],70):"人工耗时、准确性与异常处理量";
+      leader.append(el("p","","公司需提供："+prereq+"。先选一类高频任务试点，对照「"+metric+"」评估，再决定是否接入现有流程。"));
+
+      var human=el("div","starter-role-card starter-human");
+      human.append(el("div","starter-role-kicker","必须由人负责 · 审核与拍板"));
+      var boundary=data&&data.boundary?starterSnippet(data.boundary,114):
+        "由业务人员核对事实、适用规则与实际后果；涉及审批、客户权益、资金、安全或合规的结论，必须由有权限的责任人确认";
+      human.append(el("p","",boundary+"。模型建议不能直接替代正式审批或业务责任。"));
+
+      var roleCards=el("div","starter-role-grid");
+      roleCards.append(employee,leader,human);
+      roles.append(roleCards);
+      inner.append(roles);
+    }
     function renderSolutionPanel() {
       const panel=document.getElementById("solutionPanel"); if(!panel) return;
       panel.replaceChildren();
@@ -1990,6 +2066,7 @@
       const data=scenarioDetails[state.selectedScene], inner=el("div","solution-inner");
       inner.append(el("span","solution-kicker","业务场景方案"),el("h2","solution-title",item),el("p","solution-path",`${domain.systemName} / ${domain.name} / ${line.name} / ${item}`));
       inner.append(el("span",`solution-status${data ? "" : " pending"}`,data ? "已深化" : "待深化"));
+      appendStarterGuide(inner,data,scene,line,domain);
       if(scene.solutionPatternIds.length){const patterns=textModule("通用解决模式");patterns.append(patternLinks(scene.solutionPatternIds));inner.append(patterns);}
       if(!data) {
         if(scene.summary) {
