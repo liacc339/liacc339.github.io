@@ -34,6 +34,7 @@
   }
   const initialTitle = document.title;
   const pageTitles = {
+    '联系我': 'Contact',
     '课程运营智能助手': 'Course Operations AI Assistant',
     '城市生命体征 AI 智库助手': 'Urban Vital Signs AI Knowledge Assistant',
     'AI 公文起草辅助方案': 'AI-Assisted Document Drafting Concept',
