@@ -1,0 +1,82 @@
+name: Build Xiaohongshu MiniTool ZIP
+on:
+  push:
+    branches:
+      - xhs-minitool-20261021
+    paths:
+      - .github/workflows/build-xhs-minitool.yml
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: xhs-minitool-20261021
+      - name: Download official MiniTool skill 1.8.0
+        run: |
+          curl --retry 3 --retry-delay 2 -fL --connect-timeout 20 --max-time 90 -o /tmp/minitool.skill https://fe-static.xhscdn.com/minitool/20261015161653/minitool-zip-builder-1.8.0.skill
+          python3 - <<'PY'
+          import zipfile
+          with zipfile.ZipFile('/tmp/minitool.skill') as z:
+              assert 'minitool-zip-builder/SKILL.md' in z.namelist()
+              z.extractall('/tmp/xhs-skill')
+          print('Official Skill 1.8.0 downloaded and unpacked')
+          PY
+      - name: Build classic JavaScript for Chrome 61
+        run: |
+          mkdir -p /tmp/xhs-dist
+          cp xhs-mini-src/index.html /tmp/xhs-dist/index.html
+          npx --yes --package=esbuild@0.25.12 esbuild xhs-mini-src/source.js --target=chrome61 --format=iife --outfile=/tmp/xhs-dist/app.js
+          node --check /tmp/xhs-dist/app.js
+      - name: Validate MiniTool CSP, paths, syntax, and ZIP structure
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, zipfile, json, hashlib
+          root=pathlib.Path('/tmp/xhs-dist')
+          html=(root/'index.html').read_text('utf-8')
+          js=(root/'app.js').read_text('utf-8')
+          checks={
+            'root_index':html.lstrip().lower().startswith('<!doctype html>'),
+            'viewport':bool(re.search(r'<meta name="viewport"[^>]*viewport-fit=cover',html)),
+            'external_classic_script':len(re.findall(r'<script\s+src="\./app\.js"\s*>\s*</script>',html))==1,
+            'no_inline_script':not bool(re.search(r'<script(?!\s+src)[^>]*>',html,re.I)),
+            'no_inline_handlers':not bool(re.search(r'\bon(?:click|load|submit|input|change)\s*=',html,re.I)),
+            'no_disallowed_embeds':not bool(re.search(r'<(?:iframe|object|base)\b',html,re.I)),
+            'no_external_resources':not bool(re.search(r'(?:src|href)\s*=\s*["\']https?://',html,re.I)),
+            'no_offsite_backlink':not bool(re.search(r'href="\.\./\.\./index\.html',html)),
+            'no_network_calls':not bool(re.search(r'\b(fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(',js)),
+            'no_dynamic_evaluation':not bool(re.search(r'\b(?:eval|Function)\s*\(',js)),
+            'mobile_category_toggle':bool(re.search(r'id="mobileCategories"',html)) and 'mini-nav-open' in js,
+            'original_knowledge_data': all(k in js for k in ('knowledgeBase','industryKnowledge','scenarioDetails')),
+            'size_under_2MiB_each': max(len(html.encode()),len(js.encode()))<2*1024*1024,
+            'single_html_entry':len(list(root.glob('*.html')))==1,
+          }
+          print('MiniTool static checks:',json.dumps(checks,ensure_ascii=False,indent=2))
+          assert all(checks.values()),'Static checks failed'
+          package=pathlib.Path('xhs-packages/ai-solutions-minitool.zip')
+          package.parent.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(package,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as out:
+              out.write(root/'index.html','index.html')
+              out.write(root/'app.js','app.js')
+          with zipfile.ZipFile(package) as z:
+              assert sorted(z.namelist())==['app.js','index.html']
+              assert z.testzip() is None
+          checks['zip_under_10MiB']=package.stat().st_size<=10*1024*1024
+          assert checks['zip_under_10MiB']
+          report={'official_skill':'1.8.0','source':'demos/ai-solutions/index.html','script_target':'Chrome 61 / ES2017','checks':checks,'zip_file':str(package),'zip_bytes':package.stat().st_size,'uncompressed_html_bytes':len(html.encode()),'uncompressed_js_bytes':len(js.encode()),'sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'tests_not_run':['Xiaohongshu creator simulator','Android device','iOS device','Chrome 61 actual runtime']}
+          pathlib.Path('xhs-packages/build-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),'utf-8')
+          print('Deliverable:',package,'bytes:',package.stat().st_size)
+          PY
+      - name: Audit directory and ZIP using official skill scripts
+        run: |
+          python3 /tmp/xhs-skill/minitool-zip-builder/scripts/audit_artifact.py /tmp/xhs-dist
+          python3 /tmp/xhs-skill/minitool-zip-builder/scripts/audit_artifact.py xhs-packages/ai-solutions-minitool.zip
+      - name: Publish ZIP on isolated branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add xhs-packages/ai-solutions-minitool.zip xhs-packages/build-report.json
+          git diff --cached --quiet || (git commit -m "Build validated offline Xiaohongshu MiniTool ZIP" && git push origin HEAD:xhs-minitool-20261021)
