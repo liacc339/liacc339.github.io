@@ -2042,7 +2042,7 @@
       var leader=el("div","starter-role-card starter-leader");
       leader.append(el("div","starter-role-kicker","部门负责人 · 判断是否值得改"));
       var prereq=data&&data.prereq?starterSnippet(data.prereq,95):"公司需先确认数据从哪里来、谁有访问权限、现有系统能否提供接口或可控导出";
-      var metric=data&&data.value&&Array.isArray(data.value.metrics)?starterSnippet(data.value.metrics[0],70):"人工耗时、准确性与异常处理量";
+      var metric=data&&data.value&&Array.isArray(data.value.metrics)&&data.value.metrics.length?starterSnippet(data.value.metrics[0],70):"人工耗时、准确性与异常处理量";
       leader.append(el("p","","公司需提供："+prereq+"。先选一类高频任务试点，对照「"+metric+"」评估，再决定是否接入现有流程。"));
 
       var human=el("div","starter-role-card starter-human");
