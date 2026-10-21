@@ -398,7 +398,6 @@ window.LIA_TRANSLATIONS = {
   "商务支撑：参与成本测算、项目报价、合作伙伴评估及投标技术标段编制，支撑评审答疑和方案澄清。": "Commercial support: Supported cost estimation, quotations, partner assessment, tender technical documents, reviews and clarifications.",
   "交付协同：跟进需求变更，协同研发、实施及供应商团队处理方案落地中的关键问题。": "Delivery collaboration: Coordinated requirements changes and key delivery issues with engineering, implementation and supplier teams.",
   "生态协作：曾在大型通信运营商公共行业大客户部门驻场，沉淀行业解决方案与 AI 应用方法。": "Partner collaboration: Worked on site with a major telecom provider's public-sector enterprise team and developed reusable industry and AI application approaches.",
-  "某综合设计集团": "Multidisciplinary design group",
   "方案经理": "Planning & Design Manager",
   "项目方向：某文化创意产业园规划项目": "Project focus: Cultural and creative industrial park",
   "前期研策：开展背景调查、现状分析及需求梳理，参与可研、投标和技术文本编制。": "Early planning: Researched context, current conditions and requirements; contributed to feasibility studies, tenders and technical documents.",
@@ -449,5 +448,6 @@ window.LIA_TRANSLATIONS = {
   "解决方案 · 售前支持 · 产品经理 · 业务型 FDE · 企业内部提效": "Solutions · Presales Support · Product Manager · Business-oriented FDE · Internal Productivity",
   "某三甲设计院": "Architecture design institute (anonymized)",
   "某文化创意公司": "Cultural & creative company (anonymized)",
-  "正在找工作，谁来捞捞我？😭😄🌹": "Looking for a job — who's going to hire me? 😭😄🌹"
+  "正在找工作，谁来捞捞我？😭😄🌹": "Looking for a job — who's going to hire me? 😭😄🌹",
+  "某上市开发集团": "Listed property development group (anonymized)"
 };
