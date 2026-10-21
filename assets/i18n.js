@@ -405,12 +405,10 @@ window.LIA_TRANSLATIONS = {
   "前期研策：开展背景调查、现状分析及需求梳理，参与可研、投标和技术文本编制。": "Early planning: Researched context, current conditions and requirements; contributed to feasibility studies, tenders and technical documents.",
   "方案深化：推进方案深化与跨专业整合，结合客户反馈持续优化方案。": "Design development: Coordinated across disciplines and refined solutions based on customer feedback.",
   "项目管理：参与计划制定、团队组织与关键节点协调，推动项目实施。": "Project coordination: Supported planning, team organization, milestones and implementation.",
-  "某建筑设计企业": "Architecture design firm",
   "前期方案": "Early-stage design",
   "项目方向：某特色产业数字化平台 · 某高校图书馆改造 · 某新能源智能制造厂区": "Projects: Industry digital platform · University library · New energy manufacturing facility",
   "前期策划：负责调研分析、功能策划、方案研究以及项目文本和报批文件编制。": "Early planning: Led research, functional programming, solution studies and project documentation.",
   "方案设计：开展方案设计与深化，协调多专业技术条件，支撑可研、造价和投标环节。": "Architectural design: Developed concepts and coordinated technical requirements for feasibility, cost and tender work.",
-  "某文创设计企业": "Creative design company",
   "项目策划": "Project Planner",
   "项目方向：某学校创意教室 · 某品牌文化展厅": "Projects: Creative classroom · Brand exhibition space",
   "策划与拓展：参与前期调研、概念策划和客户需求分析，形成空间与展示方案。": "Planning: Contributed to discovery, concept development, customer requirements, spatial and exhibition design.",
@@ -448,6 +446,8 @@ window.LIA_TRANSLATIONS = {
   "从关注生成式 AI 到主动学习、尝试 AI 工具；后来与朋友共同参编《AI 办公与影音制作》（化学工业出版社，2025 年出版）。": "I began following generative AI, learning and experimenting with AI tools, and later co-contributed with friends to AI Office & Audiovisual Production (Chemical Industry Press, 2025).",
   "上海 · 正在寻找工作机会": "Shanghai · Actively seeking opportunities",
   "目标岗位": "Target roles",
-  "解决方案经理 · AI 售前 · AI 应用产品经理 · 业务型 FDE": "Solutions Manager · AI Presales · AI Product Manager · Business-oriented FDE",
-  "AI 赋能场景规划 · 应用方案设计 · POC 验证与落地推进": "AI use-case planning · Application solution design · POC validation and delivery"
+  "AI 赋能场景规划 · 应用方案设计 · POC 验证与落地推进": "AI use-case planning · Application solution design · POC validation and delivery",
+  "解决方案 · 售前支持 · 产品经理 · 业务型 FDE · 企业内部提效": "Solutions · Presales Support · Product Manager · Business-oriented FDE · Internal Productivity",
+  "某三甲设计院": "Architecture design institute (anonymized)",
+  "某文化创意公司": "Cultural & creative company (anonymized)"
 };
