@@ -1,0 +1,36 @@
+name: Inspect Xiaohongshu Mini-tool Skill
+on:
+  push:
+    paths:
+      - ".github/workflows/xhs-minitool-skill-inspect.yml"
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download official skill and inspect packaging requirements
+        run: |
+          set -euo pipefail
+          mkdir -p .skill /tmp/xhs-inspect
+          curl -fL --retry 3 --connect-timeout 15 --max-time 80 "https://fe-static.xhscdn.com/minitool/20261015161653/minitool-zip-builder-1.8.0.skill" -o /tmp/xhs-inspect/minitool.skill
+          file /tmp/xhs-inspect/minitool.skill
+          python - <<'PY'
+          import zipfile,os,pathlib
+          p='/tmp/xhs-inspect/minitool.skill'
+          with zipfile.ZipFile(p) as z:
+              names=z.namelist()
+              for n in names:
+                  if n.startswith('/') or '..' in pathlib.PurePosixPath(n).parts: raise RuntimeError('Unsafe archive path '+n)
+              z.extractall('.skill')
+          matches=list(pathlib.Path('.skill').rglob('SKILL.md'))
+          print('== SKILL DIRECTORY ==')
+          print('\n'.join(str(p) for p in pathlib.Path('.skill').rglob('*') if p.is_file()))
+          if not matches: raise RuntimeError('No SKILL.md found')
+          for skill in matches:
+              print('\\n== BEGIN '+str(skill)+' ==')
+              print(skill.read_text(encoding='utf-8'))
+              print('== END SKILL ==')
+          PY
