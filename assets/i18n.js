@@ -344,7 +344,6 @@ window.LIA_TRANSLATIONS = {
   "大模型问答（DeepSeek）": "LLM answering (DeepSeek)",
   "网页问答界面": "Web chat interface",
   "知识解释 · 多轮对话 · 流式回答": "Knowledge explanations · Multi-turn conversation · Streaming responses",
-  "正在找工作 · 正在找工作 · 谁来捞捞我？ · 谁来捞捞我？": "I'm job hunting · I'm job hunting · Anyone want to hire me? · Anyone want to hire me?",
   "AI 业务解决方案知识库": "AI Business Solutions Knowledge Base",
   "覆盖企业通用业务与 19 个垂直行业的 327 个 AI 赋能场景，系统整理业务问题、技术路线、实施边界和验证指标。": "A structured knowledge base of 327 AI application scenarios across common enterprise functions and 19 vertical industries, covering business problems, technical paths, delivery boundaries, and validation metrics.",
   "业务场景": "Business scenarios",
@@ -449,5 +448,6 @@ window.LIA_TRANSLATIONS = {
   "AI 赋能场景规划 · 应用方案设计 · POC 验证与落地推进": "AI use-case planning · Application solution design · POC validation and delivery",
   "解决方案 · 售前支持 · 产品经理 · 业务型 FDE · 企业内部提效": "Solutions · Presales Support · Product Manager · Business-oriented FDE · Internal Productivity",
   "某三甲设计院": "Architecture design institute (anonymized)",
-  "某文化创意公司": "Cultural & creative company (anonymized)"
+  "某文化创意公司": "Cultural & creative company (anonymized)",
+  "正在找工作，谁来捞捞我？😭😄🌹": "Looking for a job — who's going to hire me? 😭😄🌹"
 };
