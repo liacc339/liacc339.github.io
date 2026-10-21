@@ -459,3 +459,12 @@
   #notes .section-head{margin-bottom:10px}
   #notes .section-note{font-size:12px;margin-bottom:22px}
 }
+
+
+/* Contact and career profile navigation */
+.nav-links a.nav-contact{color:var(--accent);font-weight:720}
+.nav-links a.nav-contact[aria-current="page"]{border-bottom:2px solid var(--accent);padding-bottom:4px}
+@media(max-width:720px){
+  .nav-links{gap:12px}
+  .site-header .nav-links a.nav-contact{font-size:12px;white-space:nowrap}
+}
