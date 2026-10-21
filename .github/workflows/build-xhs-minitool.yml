@@ -91,7 +91,7 @@ jobs:
               errors=[]
               page.on('pageerror',lambda e: errors.append(str(e)))
               page.goto(url+'#/overview',wait_until='load')
-              page.locator('#nav .nav-item').first.wait_for(timeout=30000)
+              page.locator('#nav .nav-item').first.wait_for(state='attached',timeout=30000)
               result=page.evaluate("""() => {
                 const ids=Array.from(document.querySelectorAll('#nav .nav-item'),n=>n.dataset.id);
                 const failures=[];
