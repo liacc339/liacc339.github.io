@@ -249,6 +249,8 @@ window.LIA_TRANSLATIONS = {
   "线上 POC 的真实运营总览截图，包含课程指标、招生风险和热门课程。点击图片可体验应用。": "Real screenshot of the POC operations dashboard, featuring course metrics, enrollment risks, and popular courses. Click to try the app.",
   "查看技术路线 ↓": "View architecture ↓",
   "界面展示": "Product preview",
+  "城市生命体征 AI 智库助手 · 实际界面": "Urban Vital Signs AI Knowledge Assistant · Real interface",
+  "城市体征问答 / 指标解读 / 辅助分析": "Urban indicators Q&A / Interpretation / Assisted analysis",
   "体验在线 POC ↗": "Try the live POC ↗",
   "运营总览 · 实际产品界面": "Operations dashboard · Real product screenshot",
   "课程指标 / 招生风险 / 热门课程": "Course metrics / Enrollment risks / Popular courses",
