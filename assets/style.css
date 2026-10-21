@@ -212,7 +212,7 @@
 
 
 /* Real course operations overview screenshot */
-.art-course .project-shot,.art-city .project-shot{
+.art-course .project-shot,.art-city .project-shot,.art-industries .project-shot{
   display:block;width:92%;height:auto;max-height:85%;object-fit:contain;
   border:1px solid rgba(54,95,138,.18);border-radius:7px;
   background:#fff;box-shadow:0 10px 25px rgba(18,56,95,.13);
