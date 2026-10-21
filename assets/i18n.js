@@ -24,7 +24,7 @@ window.LIA_TRANSLATIONS = {
   "业务分析": "Business analysis",
   "方案研究": "Solution research",
   "查看场景与方案 →": "Explore scenarios →",
-  "围绕业务问题、AI 能力边界和方案取舍写点实践笔记。以下文章仍在持续完善。": "Practical notes on business problems, AI capability boundaries, and solution trade-offs. These drafts are still evolving.",
+  "实践笔记、思考小记、些许愚见": "Practice notes, small reflections, and a few personal views.",
   "研究笔记": "Research notes",
   "项目拆解": "Project breakdown",
   "方法笔记": "Method notes",

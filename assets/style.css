@@ -418,3 +418,44 @@
   .job-ticker-track{animation:none;width:100%;justify-content:center}
   .job-ticker-line:nth-child(2){display:none}
 }
+
+
+/* Section heading rhythm: one visual hierarchy for Projects and Notes */
+#projects .section-head,#notes .section-head{
+  gap:0;
+  margin-bottom:24px;
+}
+#projects .section-head h2,#notes .section-head h2{
+  display:block;
+  padding-bottom:0;
+  font-size:28px;
+  line-height:1.25;
+}
+#projects .section-head h2::after,#notes .section-head h2::after{
+  position:static;
+  display:block;
+  width:42px;
+  height:3px;
+  margin:10px auto 8px;
+  transform:none;
+}
+#projects .section-head .h-sub,#notes .section-head .h-sub{
+  font-size:13px;
+  line-height:1.4;
+  color:var(--muted);
+  letter-spacing:.035em;
+}
+#notes .section-head{margin-bottom:12px}
+#notes .section-note{
+  max-width:700px;
+  margin:0 auto 26px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+@media(max-width:720px){
+  #projects .section-head h2,#notes .section-head h2{font-size:25px}
+  #projects .section-head .h-sub,#notes .section-head .h-sub{font-size:12px}
+  #notes .section-head{margin-bottom:10px}
+  #notes .section-note{font-size:12px;margin-bottom:22px}
+}
