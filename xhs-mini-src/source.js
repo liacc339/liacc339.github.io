@@ -2032,6 +2032,33 @@
       for(var j=0;j<ids.length;j++)if(starterPatterns[ids[j]])return ids[j];
       return "process";
     }
+    function starterSteps(data,scene,patternKey) {
+      var tasks=data&&Array.isArray(data.tasks)?data.tasks:[];
+      if(tasks.length){
+        var mid=tasks.find(function(task,index){
+          if(index===0||index===tasks.length-1)return false;
+          return /AI|模型|智能|检索/.test(String(task.owner||""))||(task.techIds||[]).some(function(id){return /llm|rag|agent|extract|asr|ocr|workflow|optimization/.test(String(id));});
+        })||tasks[Math.floor(tasks.length/2)];
+        return [tasks[0],mid,tasks[tasks.length-1]].filter(function(task,index,array){return task&&array.indexOf(task)===index;}).map(function(task){
+          var action=starterSnippet(task.action||task.detail,64);
+          return String(task.name||"处理任务")+"："+(action||starterSnippet(task.input,55)||"依照现有流程完成并留存依据");
+        });
+      }
+      var path=data&&Array.isArray(data.path)?data.path:Array.isArray(scene.path)?scene.path:[];
+      if(path.length){
+        return [path[0],path[Math.floor(path.length/2)],path[path.length-1]].map(function(raw){
+          return starterSnippet(Array.isArray(raw)?raw[0]:raw,74);
+        }).filter(function(value,index,all){return value&&all.indexOf(value)===index;});
+      }
+      var pattern=patternLearning[patternKey];
+      if(pattern&&Array.isArray(pattern.actions)&&pattern.actions.length){
+        return pattern.actions.map(function(action,index){
+          var note=index===0?"围绕「"+scene.name+"」":index===1?"针对该业务任务":"核验「"+scene.name+"」的结果";
+          return note+"，"+action;
+        });
+      }
+      return ["明确「"+scene.name+"」的输入材料与要解决的问题","用脱敏或模拟材料做一次处理并记录过程","由业务人员核对输出，再决定是否适合扩大使用"];
+    }
     function starterSensitive(scene,domain) {
       return /医疗|临床|诊断|法律|法务|合规|财务|薪酬|信贷|保险|安全|车辆|工控|应急|公共安全|审批|招聘|用药|治疗|设备控制|报警|调度/.test(String(scene.name)+" "+String(domain.name));
     }
