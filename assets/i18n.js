@@ -384,9 +384,7 @@ window.LIA_TRANSLATIONS = {
   "项目说明：这是个人持续整理的方案研究与学习知识库，不代表其中所有场景均已在真实企业中部署或产生效果数据。": "This is a personal research and learning knowledge base. It does not imply that every scenario has been deployed in a real organization or has measured outcome data.",
   "联系我": "Contact",
   "← 返回主页": "← Back to home",
-  "利亚晨": "Lia Chen",
   "AI 应用解决方案 · 售前支持 · 业务场景与 POC 验证": "AI Applications & Solutions · Presales · Business POCs",
-  "上海 · 开放工作机会 · 解决方案经理 / 售前支持经理 / AI 应用产品经理": "Shanghai · Open to opportunities · Solution Manager / Presales / AI Product Manager",
   "发送邮件 ↗": "Send email ↗",
   "邮箱：lia339@qq.com": "Email: lia339@qq.com",
   "微信：liac339 · 点击复制": "WeChat: liac339 · Click to copy",
@@ -442,9 +440,10 @@ window.LIA_TRANSLATIONS = {
   "关键客户沟通": "Key account communication",
   "一级注册建筑师": "Registered Architect (Class I)",
   "中级工程师": "Intermediate Engineer",
-  "另有 2025 年 AI 办公应用相关出版物参编经历。": "Contributed to a publication on AI office applications in 2025.",
   "欢迎联系我": "Get in touch",
   "如需完整简历及具体项目资料，请通过邮箱或微信联系获取。": "For the full resume and detailed project information, please contact me by email or WeChat.",
   "复制微信号": "Copy WeChat ID",
-  "© Lia Chen · 个人职业履历 · 持续更新中": "© Lia Chen · Professional profile · Updated regularly"
+  "© Lia Chen · 个人职业履历 · 持续更新中": "© Lia Chen · Professional profile · Updated regularly",
+  "上海 · 正在寻找工作机会 · 解决方案经理 / 售前支持经理 / AI 应用产品经理 / FDE / 其他开放性岗位": "Shanghai · Seeking new opportunities · Solution Manager / Presales Manager / AI Product Manager / FDE / Other open roles",
+  "出版成果：《AI 办公与影音制作》｜化学工业出版社｜2025 年（参编）": "Publication: AI Office & Audiovisual Production · Chemical Industry Press · 2025 (contributing author)"
 };
