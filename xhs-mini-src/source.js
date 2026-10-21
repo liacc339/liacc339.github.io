@@ -2010,41 +2010,27 @@
     };
     function starterPatternFor(scene) {
       var ids=scene.solutionPatternIds||[];
-      // Prefer a task-specific method to a generic knowledge retrieval label.
-      var preferred=["optimization","prediction","review","matching","recognition","relation","data_query","task_execution","process","analysis","generation","knowledge_qa"];
       var name=String(scene.name||"");
-      if(/问答|知识查询|制度查询|检索|知识助手/.test(name)&&ids.indexOf("knowledge_qa")>=0)return "knowledge_qa";
-      if(/起草|生成|摘要|创作|报告/.test(name)&&ids.indexOf("generation")>=0)return "generation";
-      if(/分类|识别|提取|解析/.test(name)&&ids.indexOf("recognition")>=0)return "recognition";
-      for(var i=0;i<preferred.length;i++)if(ids.indexOf(preferred[i])>=0)return preferred[i];
+      var candidates=[
+        ["optimization",/排课|排班|排程|装载|路线规划|路径优化|资源分配|调度优化|组合优化|生产计划|选址优化/],
+        ["prediction",/预测|需求预估|销量预估|趋势预判|故障预测|流失预测/],
+        ["review",/预审|审查|校核|合规核对|规则核对|材料完整性|风险审核|风险提示/],
+        ["matching",/匹配|个性化推荐|智能推荐|候选推荐|推荐候选/],
+        ["recognition",/识别|提取|解析|录入|分类|标签建议|文档抽取/],
+        ["relation",/关联|关系分析|影响路径|知识图谱|血缘追踪|多跳/],
+        ["data_query",/数据查询|信息查询|状态查询|统计查询|进度查询|实时数据/],
+        ["generation",/起草|撰写|生成|摘要|创作|文案|初稿|报告编写|内容生产/],
+        ["knowledge_qa",/知识问答|政策问答|制度问答|问答|知识查询|知识助手|法规检索|知识检索/],
+        ["analysis",/分析|研判|洞察|归因|监测|指标汇总|异常检测/],
+        ["process",/流程|分流|派单|转派|流转|审批辅助|任务编排/],
+        ["task_execution",/跨系统操作|自动执行|代办|自主任务|复杂任务/]
+      ];
+      for(var i=0;i<candidates.length;i++){
+        if(candidates[i][1].test(name)&&ids.indexOf(candidates[i][0])!==-1)return candidates[i][0];
+      }
+      // The existing per-scene pattern mapping is the primary source, not a speculative classifier.
+      for(var j=0;j<ids.length;j++)if(starterPatterns[ids[j]])return ids[j];
       return "process";
-    }
-    function starterSteps(data,scene,patternKey) {
-      var tasks=data&&Array.isArray(data.tasks)?data.tasks:[];
-      if(tasks.length){
-        var mid=tasks.find(function(task,index){
-          if(index===0||index===tasks.length-1)return false;
-          return /AI|模型|智能|检索/.test(String(task.owner||""))||(task.techIds||[]).some(function(id){return /llm|rag|agent|extract|asr|ocr|workflow|optimization/.test(String(id));});
-        })||tasks[Math.floor(tasks.length/2)];
-        return [tasks[0],mid,tasks[tasks.length-1]].filter(function(task,index,array){return task&&array.indexOf(task)===index;}).map(function(task){
-          var action=starterSnippet(task.action||task.detail,64);
-          return String(task.name||"处理任务")+"："+(action||starterSnippet(task.input,55)||"依照现有流程完成并留存依据");
-        });
-      }
-      var path=data&&Array.isArray(data.path)?data.path:Array.isArray(scene.path)?scene.path:[];
-      if(path.length){
-        return [path[0],path[Math.floor(path.length/2)],path[path.length-1]].map(function(raw){
-          return starterSnippet(Array.isArray(raw)?raw[0]:raw,74);
-        }).filter(function(value,index,all){return value&&all.indexOf(value)===index;});
-      }
-      var pattern=patternLearning[patternKey];
-      if(pattern&&Array.isArray(pattern.actions)&&pattern.actions.length){
-        return pattern.actions.map(function(action,index){
-          var note=index===0?"围绕「"+scene.name+"」":index===1?"针对该业务任务":"核验「"+scene.name+"」的结果";
-          return note+"，"+action;
-        });
-      }
-      return ["明确「"+scene.name+"」的输入材料与要解决的问题","用脱敏或模拟材料做一次处理并记录过程","由业务人员核对输出，再决定是否适合扩大使用"];
     }
     function starterSensitive(scene,domain) {
       return /医疗|临床|诊断|法律|法务|合规|财务|薪酬|信贷|保险|安全|车辆|工控|应急|公共安全|审批|招聘|用药|治疗|设备控制|报警|调度/.test(String(scene.name)+" "+String(domain.name));
