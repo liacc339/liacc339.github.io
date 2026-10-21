@@ -62,7 +62,7 @@ jobs:
           }
           print('MiniTool static checks:',json.dumps(checks,ensure_ascii=False,indent=2))
           assert all(checks.values()),'Static checks failed'
-          package=pathlib.Path('xhs-packages/ai-solutions-minitool.zip')
+          package=pathlib.Path('xhs-packages/ai-solutions-minitool-v3.zip')
           package.parent.mkdir(parents=True,exist_ok=True)
           with zipfile.ZipFile(package,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as out:
               out.write(root/'index.html','index.html')
@@ -72,7 +72,7 @@ jobs:
               assert z.testzip() is None
           checks['zip_under_10MiB']=package.stat().st_size<=10*1024*1024
           assert checks['zip_under_10MiB']
-          report={'official_skill':'1.8.0','source':'xhs-mini-src/source.js + xhs-mini-src/index.html','version':'role-aware-quick-start-v2','script_target':'Chrome 61 / ES2017','checks':checks,'zip_file':str(package),'zip_bytes':package.stat().st_size,'uncompressed_html_bytes':len(html.encode()),'uncompressed_js_bytes':len(js.encode()),'sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'tests_not_run':['Xiaohongshu creator simulator','Android device','iOS device','Chrome 61 actual runtime']}
+          report={'official_skill':'1.8.0','source':'xhs-mini-src/source.js + xhs-mini-src/index.html','version':'reader-first-v3','script_target':'Chrome 61 / ES2017','checks':checks,'zip_file':str(package),'zip_bytes':package.stat().st_size,'uncompressed_html_bytes':len(html.encode()),'uncompressed_js_bytes':len(js.encode()),'sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'tests_not_run':['Xiaohongshu creator simulator','Android device','iOS device','Chrome 61 actual runtime']}
           pathlib.Path('xhs-packages/build-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),'utf-8')
           print('Deliverable:',package,'bytes:',package.stat().st_size)
           PY
@@ -109,7 +109,7 @@ jobs:
                     if(!quick||steps===0||roleCards!==3||!content.includes('一分钟说清怎么做')){
                       failures.push({id,name:button.textContent,steps,roleCards});
                     }
-                    if(content.includes('详细方案尚未深化'))pending++;else filled++;
+                    if(document.querySelector('.solution-status.pending'))pending++;else filled++;
                   }
                 }
                 return {domainCount:ids.length,scenes,filled,pending,failures};
@@ -127,10 +127,10 @@ jobs:
       - name: Audit directory and ZIP using official skill scripts
         run: |
           python3 /tmp/xhs-skill/minitool-zip-builder/scripts/audit_artifact.py /tmp/xhs-dist
-          python3 /tmp/xhs-skill/minitool-zip-builder/scripts/audit_artifact.py xhs-packages/ai-solutions-minitool.zip
+          python3 /tmp/xhs-skill/minitool-zip-builder/scripts/audit_artifact.py xhs-packages/ai-solutions-minitool-v3.zip
       - name: Publish ZIP on isolated branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add xhs-packages/ai-solutions-minitool.zip xhs-packages/build-report.json
+          git add xhs-packages/ai-solutions-minitool-v3.zip xhs-packages/build-report.json
           git diff --cached --quiet || (git commit -m "Build validated offline Xiaohongshu MiniTool ZIP" && git push origin HEAD:xhs-minitool-20261021)
