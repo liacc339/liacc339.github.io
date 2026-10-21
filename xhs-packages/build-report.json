@@ -1,0 +1,33 @@
+{
+  "official_skill": "1.8.0",
+  "source": "demos/ai-solutions/index.html",
+  "script_target": "Chrome 61 / ES2017",
+  "checks": {
+    "root_index": true,
+    "viewport": true,
+    "external_classic_script": true,
+    "no_inline_script": true,
+    "no_inline_handlers": true,
+    "no_disallowed_embeds": true,
+    "no_external_resources": true,
+    "no_offsite_backlink": true,
+    "no_network_calls": true,
+    "no_dynamic_evaluation": true,
+    "mobile_category_toggle": true,
+    "original_knowledge_data": true,
+    "size_under_2MiB_each": true,
+    "single_html_entry": true,
+    "zip_under_10MiB": true
+  },
+  "zip_file": "xhs-packages/ai-solutions-minitool.zip",
+  "zip_bytes": 255464,
+  "uncompressed_html_bytes": 39350,
+  "uncompressed_js_bytes": 1082164,
+  "sha256": "4c6cc9088d5844bf99bca0fe33f954daa8ce626d33b121c251564bee1634d723",
+  "tests_not_run": [
+    "Xiaohongshu creator simulator",
+    "Android device",
+    "iOS device",
+    "Chrome 61 actual runtime"
+  ]
+}
