@@ -1,7 +1,7 @@
 {
   "official_skill": "1.8.0",
   "source": "xhs-mini-src/source.js + xhs-mini-src/index.html",
-  "version": "role-aware-quick-start-v2",
+  "version": "reader-first-v3",
   "script_target": "Chrome 61 / ES2017",
   "checks": {
     "root_index": true,
@@ -23,11 +23,11 @@
     "single_html_entry": true,
     "zip_under_10MiB": true
   },
-  "zip_file": "xhs-packages/ai-solutions-minitool.zip",
+  "zip_file": "xhs-packages/ai-solutions-minitool-v3.zip",
   "zip_bytes": 261203,
   "uncompressed_html_bytes": 41084,
   "uncompressed_js_bytes": 1097952,
-  "sha256": "f534ce014c0e607429c38f063002c6756e5849e6bcfcaa04e56397c7d668b0f5",
+  "sha256": "52a58e657ed6699c1049bbb3001ccedceb463b28b35ee58d28d6f30b5332b1e6",
   "tests_not_run": [
     "Xiaohongshu creator simulator",
     "Android device",
