@@ -392,3 +392,29 @@
 .city-preview-pending{aspect-ratio:1782/877;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(115deg,#071b30,#0a3754);border-color:#235a77;padding:24px;color:#d9f1ff;text-align:center}
 .city-preview-pending .city-preview-label{font-weight:750;font-size:22px}
 .project-case .city-preview-pending p{color:#b0c7db;font-size:14px;margin:0}
+
+
+/* Personal job-search ticker: calm, looping, accessible */
+.job-ticker{
+  position:relative;max-width:530px;margin:22px auto 0;
+  overflow:hidden;border:1px solid var(--line);border-radius:999px;
+  background:var(--paper);padding:9px 0;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 5%,#000 95%,transparent 100%);
+}
+.job-ticker-track{display:flex;width:max-content;animation:job-ticker-slide 19s linear infinite}
+.job-ticker-line{
+  flex:0 0 auto;white-space:nowrap;padding:0 25px;color:var(--accent);
+  font-size:13px;font-weight:650;letter-spacing:.025em;line-height:1.6;
+}
+.job-ticker:hover .job-ticker-track{animation-play-state:paused}
+.job-ticker-accessible{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@keyframes job-ticker-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:720px){
+  .job-ticker{max-width:min(100%,440px);margin-top:19px}
+  .job-ticker-line{font-size:12px;padding:0 21px}
+}
+@media(prefers-reduced-motion:reduce){
+  .job-ticker-track{animation:none;width:100%;justify-content:center}
+  .job-ticker-line:nth-child(2){display:none}
+}
