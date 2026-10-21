@@ -468,3 +468,15 @@
   .nav-links{gap:12px}
   .site-header .nav-links a.nav-contact{font-size:12px;white-space:nowrap}
 }
+
+
+/* Compact mobile navigation with Contact link */
+@media(max-width:720px){
+  .site-header .nav{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;row-gap:9px;padding-top:9px;padding-bottom:9px}
+  .site-header .brand{grid-row:1;grid-column:1;justify-self:start}
+  .site-header .nav-right{grid-column:1/-1;grid-row:2;width:100%;justify-content:space-between;gap:9px;min-width:0}
+  .site-header .nav-links{flex:1;min-width:0;display:flex;gap:14px;overflow-x:auto;scrollbar-width:none}
+  .site-header .nav-links::-webkit-scrollbar{display:none}
+  .site-header .nav-links a{font-size:12px}
+  .site-header .lang-btn,.site-header .theme-btn{flex:0 0 auto}
+}
