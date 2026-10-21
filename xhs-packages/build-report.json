@@ -24,10 +24,10 @@
     "zip_under_10MiB": true
   },
   "zip_file": "xhs-packages/ai-solutions-minitool.zip",
-  "zip_bytes": 257799,
+  "zip_bytes": 260515,
   "uncompressed_html_bytes": 41084,
-  "uncompressed_js_bytes": 1088512,
-  "sha256": "6a971e570cc731e0c7e90a6d3ec8b09ee952902af07ce2702be9149a75204e9a",
+  "uncompressed_js_bytes": 1097121,
+  "sha256": "57342d47ab88832f1d3a72b454826e78ab8bce1959cc21a491efe9b3073f4a4a",
   "tests_not_run": [
     "Xiaohongshu creator simulator",
     "Android device",
