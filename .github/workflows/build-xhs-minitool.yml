@@ -40,6 +40,7 @@ jobs:
           root=pathlib.Path('/tmp/xhs-dist')
           html=(root/'index.html').read_text('utf-8')
           js=(root/'app.js').read_text('utf-8')
+          source=(pathlib.Path('xhs-mini-src/source.js')).read_text('utf-8')
           checks={
             'root_index':html.lstrip().lower().startswith('<!doctype html>'),
             'viewport':bool(re.search(r'<meta name="viewport"[^>]*viewport-fit=cover',html)),
@@ -52,9 +53,9 @@ jobs:
             'no_network_calls':not bool(re.search(r'\b(fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(',js)),
             'no_dynamic_evaluation':not bool(re.search(r'\b(?:eval|Function)\s*\(',js)),
             'mobile_category_toggle':bool(re.search(r'id="mobileCategories"',html)) and 'mini-nav-open' in js,
-            'one_minute_steps_all_scenes':'appendStarterGuide(inner,data,scene,line,domain);' in js and 'starter-step-list' in html,
-            'employee_manager_and_human_roles':all(t in js for t in ('普通员工 · 今天可以试','部门负责人 · 判断是否值得改','必须由人负责 · 审核与拍板')),
-            'not_yet_developed_disclaimer':'入门建议 · 本场景方案待深化' in js,
+            'one_minute_steps_all_scenes':'appendStarterGuide(inner,data,scene,line,domain);' in source and 'starter-step-list' in html and 'appendStarterGuide' in js,
+            'employee_manager_and_human_roles':all(t in source for t in ('普通员工 · 今天可以试','部门负责人 · 判断是否值得改','必须由人负责 · 审核与拍板')),
+            'not_yet_developed_disclaimer':'入门建议 · 本场景方案待深化' in source,
             'original_knowledge_data': all(k in js for k in ('knowledgeBase','industryKnowledge','scenarioDetails')),
             'size_under_2MiB_each': max(len(html.encode()),len(js.encode()))<2*1024*1024,
             'single_html_entry':len(list(root.glob('*.html')))==1,
