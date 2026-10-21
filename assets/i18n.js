@@ -337,7 +337,7 @@ window.LIA_TRANSLATIONS = {
   "回答依据": "Grounding",
   "减少脱离材料的推断，明确原型能力边界。": "Avoid unsupported inferences and define the prototype's boundaries.",
   "项目说明：这是 RAG 问答验证原型，不代表已建成实时城市监控或正式生产系统。公开体验地址尚未提供。": "This RAG prototype is not a live urban monitoring or production system. A public demo link is not yet available.",
-  "核心能力": "Core capabilities",
+  "核心能力": "Core strengths",
   "用户提问 → Flask 服务端": "User question → Flask server",
   "调用 Dify Chatflow API · 服务端保管密钥 · 会话 ID 管理 · SSE 流式返回": "Proxy Dify Chatflow API · Server-side credentials · Conversation ID management · SSE streaming",
   "Dify Chatflow → 知识库召回 → Rerank 相关性重排": "Dify Chatflow → Knowledge retrieval → Rerank",
@@ -445,5 +445,9 @@ window.LIA_TRANSLATIONS = {
   "上海 · 正在寻找工作机会 · 解决方案经理 / 售前支持经理 / AI 应用产品经理 / FDE / 其他开放性岗位": "Shanghai · Seeking new opportunities · Solution Manager / Presales Manager / AI Product Manager / FDE / Other open roles",
   "出版成果：《AI 办公与影音制作》｜化学工业出版社｜2025 年（参编）": "Publication: AI Office & Audiovisual Production · Chemical Industry Press · 2025 (contributing author)",
   "开始探索 AI 应用": "Began Exploring AI Applications",
-  "从关注生成式 AI 到主动学习、尝试 AI 工具；后来与朋友共同参编《AI 办公与影音制作》（化学工业出版社，2025 年出版）。": "I began following generative AI, learning and experimenting with AI tools, and later co-contributed with friends to AI Office & Audiovisual Production (Chemical Industry Press, 2025)."
+  "从关注生成式 AI 到主动学习、尝试 AI 工具；后来与朋友共同参编《AI 办公与影音制作》（化学工业出版社，2025 年出版）。": "I began following generative AI, learning and experimenting with AI tools, and later co-contributed with friends to AI Office & Audiovisual Production (Chemical Industry Press, 2025).",
+  "上海 · 正在寻找工作机会": "Shanghai · Actively seeking opportunities",
+  "目标岗位": "Target roles",
+  "解决方案经理 · AI 售前 · AI 应用产品经理 · 业务型 FDE": "Solutions Manager · AI Presales · AI Product Manager · Business-oriented FDE",
+  "AI 赋能场景规划 · 应用方案设计 · POC 验证与落地推进": "AI use-case planning · Application solution design · POC validation and delivery"
 };
