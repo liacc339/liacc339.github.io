@@ -345,5 +345,6 @@ window.LIA_TRANSLATIONS = {
   "Dify Chatflow → 知识库召回 → Rerank 相关性重排": "Dify Chatflow → Knowledge retrieval → Rerank",
   "大模型问答（DeepSeek）": "LLM answering (DeepSeek)",
   "网页问答界面": "Web chat interface",
-  "知识解释 · 多轮对话 · 流式回答": "Knowledge explanations · Multi-turn conversation · Streaming responses"
+  "知识解释 · 多轮对话 · 流式回答": "Knowledge explanations · Multi-turn conversation · Streaming responses",
+  "正在找工作 · 正在找工作 · 谁来捞捞我？ · 谁来捞捞我？": "I'm job hunting · I'm job hunting · Anyone want to hire me? · Anyone want to hire me?"
 };
