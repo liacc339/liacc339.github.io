@@ -53,9 +53,9 @@ jobs:
             'no_network_calls':not bool(re.search(r'\b(fetch|XMLHttpRequest|WebSocket|EventSource)\s*\(',js)),
             'no_dynamic_evaluation':not bool(re.search(r'\b(?:eval|Function)\s*\(',js)),
             'mobile_category_toggle':bool(re.search(r'id="mobileCategories"',html)) and 'mini-nav-open' in js,
-            'one_minute_steps_all_scenes':'appendStarterGuide(inner,data,scene,line,domain);' in source and 'starter-step-list' in html and 'appendStarterGuide' in js,
-            'employee_manager_and_human_roles':all(t in source for t in ('普通员工 · 今天可以试','部门负责人 · 判断是否值得改','必须由人负责 · 审核与拍板')),
-            'not_yet_developed_disclaimer':'入门建议 · 本场景方案待深化' in source,
+            'one_minute_steps_all_scenes':'appendStarterGuide(inner,data,scene,line,domain);' in source and 'starter-step-list' in html and 'appendStarterGuide' in js and 'starterPatterns' in source,
+            'employee_manager_and_human_roles':all(t in source for t in ('普通员工 | 自己先试','部门负责人 | 决定怎么试点','必须由人负责 | 风险与最终确认')),
+            'not_yet_developed_disclaimer':'该场景详细方案尚未深化' in source,
             'original_knowledge_data': all(k in js for k in ('knowledgeBase','industryKnowledge','scenarioDetails')),
             'size_under_2MiB_each': max(len(html.encode()),len(js.encode()))<2*1024*1024,
             'single_html_entry':len(list(root.glob('*.html')))==1,
@@ -75,6 +75,54 @@ jobs:
           report={'official_skill':'1.8.0','source':'xhs-mini-src/source.js + xhs-mini-src/index.html','version':'role-aware-quick-start-v2','script_target':'Chrome 61 / ES2017','checks':checks,'zip_file':str(package),'zip_bytes':package.stat().st_size,'uncompressed_html_bytes':len(html.encode()),'uncompressed_js_bytes':len(js.encode()),'sha256':hashlib.sha256(package.read_bytes()).hexdigest(),'tests_not_run':['Xiaohongshu creator simulator','Android device','iOS device','Chrome 61 actual runtime']}
           pathlib.Path('xhs-packages/build-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),'utf-8')
           print('Deliverable:',package,'bytes:',package.stat().st_size)
+          PY
+      - name: Browser smoke test of business scene guidance
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install chromium
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          from pathlib import Path
+          from urllib.parse import quote
+          url=Path('/tmp/xhs-dist/index.html').as_uri()
+          with sync_playwright() as p:
+              browser=p.chromium.launch(headless=True,args=['--no-sandbox'])
+              page=browser.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+              errors=[]
+              page.on('pageerror',lambda e: errors.append(str(e)))
+              page.goto(url+'#/overview',wait_until='load')
+              page.locator('#nav .nav-item').first.wait_for(timeout=30000)
+              result=page.evaluate("""() => {
+                const ids=Array.from(document.querySelectorAll('#nav .nav-item'),n=>n.dataset.id);
+                const failures=[];
+                let scenes=0,filled=0,pending=0;
+                for(const id of ids){
+                  const node=Array.from(document.querySelectorAll('#nav .nav-item')).find(n=>n.dataset.id===id);
+                  node.click();
+                  const buttons=Array.from(document.querySelectorAll('.scene-button'));
+                  for(const button of buttons){
+                    button.click();scenes++;
+                    const quick=document.querySelector('.starter-quick');
+                    const steps=quick?.querySelectorAll('li').length||0;
+                    const roleCards=document.querySelectorAll('.starter-role-card').length;
+                    const content=document.querySelector('#solutionPanel')?.textContent||'';
+                    if(!quick||steps===0||roleCards!==3||!content.includes('一分钟说清怎么做')){
+                      failures.push({id,name:button.textContent,steps,roleCards});
+                    }
+                    if(content.includes('详细方案尚未深化'))pending++;else filled++;
+                  }
+                }
+                return {domainCount:ids.length,scenes,filled,pending,failures};
+              }""")
+              assert result['scenes']>300 and not result['failures'],result
+              assert not errors,errors
+              print('All business scenes smoke-tested:',result)
+              for key in ['oa|公文起草辅助','oa|公文摘要生成','fms|票据信息提取']:
+                  page.goto(url+'#/business/'+quote('oa' if key.startswith('oa') else 'fms',safe='')+'/scene/'+quote(key,safe=''),wait_until='load')
+                  assert page.locator('.starter-quick').count()==1,key
+                  assert page.locator('.starter-role-card').count()==3,key
+              print('Mobile smoke test completed without script exceptions.')
+              browser.close()
           PY
       - name: Audit directory and ZIP using official skill scripts
         run: |
