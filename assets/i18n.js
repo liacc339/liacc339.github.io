@@ -43,8 +43,6 @@ window.LIA_TRANSLATIONS = {
   "近年 · SOLUTION WORK": "Recent · SOLUTION WORK",
   "数字化解决方案与行业项目实践": "Digital Solutions and Industry Projects",
   "参与政务、公共文化、教育、医疗等场景的需求分析、方案设计与项目协作。": "Worked on discovery, solution design, and cross-team projects in government, public culture, education, and healthcare.",
-  "从建筑设计开始的职业旅程": "A Career That Began in Architecture",
-  "学习如何理解真实需求、协调多方约束，再把想法变成可执行的设计。": "Learning to understand real needs, reconcile constraints, and turn ideas into workable designs.",
   "解决方案设计": "Solution design",
   "原型验证": "Prototype validation",
   "RAG / 知识库": "RAG / Knowledge base",
@@ -445,5 +443,7 @@ window.LIA_TRANSLATIONS = {
   "复制微信号": "Copy WeChat ID",
   "© Lia Chen · 个人职业履历 · 持续更新中": "© Lia Chen · Professional profile · Updated regularly",
   "上海 · 正在寻找工作机会 · 解决方案经理 / 售前支持经理 / AI 应用产品经理 / FDE / 其他开放性岗位": "Shanghai · Seeking new opportunities · Solution Manager / Presales Manager / AI Product Manager / FDE / Other open roles",
-  "出版成果：《AI 办公与影音制作》｜化学工业出版社｜2025 年（参编）": "Publication: AI Office & Audiovisual Production · Chemical Industry Press · 2025 (contributing author)"
+  "出版成果：《AI 办公与影音制作》｜化学工业出版社｜2025 年（参编）": "Publication: AI Office & Audiovisual Production · Chemical Industry Press · 2025 (contributing author)",
+  "开始探索 AI 应用": "Began Exploring AI Applications",
+  "从关注生成式 AI 到主动学习、尝试 AI 工具；后来与朋友共同参编《AI 办公与影音制作》（化学工业出版社，2025 年出版）。": "I began following generative AI, learning and experimenting with AI tools, and later co-contributed with friends to AI Office & Audiovisual Production (Chemical Industry Press, 2025)."
 };
