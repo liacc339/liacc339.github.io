@@ -423,6 +423,28 @@ body{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
   .stat{margin-right:6px;margin-bottom:6px}
 }
 @supports(padding-bottom:env(safe-area-inset-bottom)){body{padding-bottom:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px))}}
+
+/* Role-based quick start: entry for people without AI engineering experience. */
+.starter-quick,.starter-roles{margin:18px 0 20px;padding:18px;background:#f4f9fd;border:1px solid #d4e5f1;border-radius:12px}
+.starter-quick{border-left:4px solid #1878a7;background:#eef7fc}
+.starter-quick>h3,.starter-roles>h3{margin:0 0 12px;color:#123d5c;font-size:17px;font-weight:800;line-height:1.4}
+.starter-step-list{list-style:none;counter-reset:quickstep;padding:0;margin:0}
+.starter-step-list li{position:relative;counter-increment:quickstep;padding:5px 4px 8px 38px;min-height:35px;font-size:14px;line-height:1.7;color:#21445c;overflow-wrap:break-word}
+.starter-step-list li::before{content:counter(quickstep);position:absolute;left:0;top:7px;display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;border-radius:50%;background:#dceff7;color:#09658d;font-weight:800;font-size:12px}
+.starter-evidence{margin:9px 0 0;font-size:12px;line-height:1.6;color:#617d91}
+.starter-roles{background:#fff}
+.starter-role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-gap:10px}
+.starter-role-card{min-width:0;border:1px solid #dce7ee;border-radius:9px;padding:13px 12px 14px;background:#fbfcfe}
+.starter-role-kicker{font-size:13px;font-weight:800;color:#1c5b7c;margin-bottom:9px}
+.starter-role-card p{margin:0;color:#465c6d;font-size:13px;line-height:1.8;overflow-wrap:break-word}
+.starter-person{border-top:3px solid #39a5b9}
+.starter-leader{border-top:3px solid #668cc7}
+.starter-human{border-top:3px solid #b08f56}
+@media (max-width:980px){
+ .starter-role-grid{grid-template-columns:1fr;grid-gap:9px}
+ .starter-quick,.starter-roles{margin:13px 0 17px;padding:15px}
+ .starter-role-card{padding:13px 14px}
+}
 </style>
 </head>
 <body>
