@@ -1982,78 +1982,116 @@
     }
 
     // 一分钟上手：只从当前场景已有的步骤/前提/边界提炼建议，不捏造项目数据。
-    function starterSnippet(value,limit) {
-      var str=String(value||"").replace(/\s+/g," ").trim();
-      if(!str)return "";
-      var clauses=str.split(/[。；\n]/);
-      var first=clauses[0]||str;
+
+    // Reader-first guide. Existing case tasks outrank pattern guidance; examples are not measured outcomes.
+    function starterSnippet(value, limit) {
+      var valueText=String(value||"").replace(/\s+/g," ").trim();
+      if(!valueText)return "";
+      var first=valueText.split(/[。；\n]/)[0]||valueText;
       if(first.length>limit){
         var cut=Math.max(first.lastIndexOf("，",limit),first.lastIndexOf("、",limit));
         first=cut>limit/2?first.slice(0,cut):first.slice(0,limit)+"…";
       }
-      return first;
+      return first.replace(/[，、：;\s]+$/,"");
     }
-    function starterSteps(data,scene) {
+    var starterPatterns={
+      knowledge_qa:{demo:"找一份公开制度或帮助文档，提出与该文件有关的问题，让 AI 只根据材料回答，并逐条核对引用出处。",input:"公开制度/手册、问题、版本",validate:"引用条款是否存在、是否现行，找不到就标明不知道",metric:"引用正确率、找到依据所需时间"},
+      data_query:{demo:"用虚构订单或库存建立一张小表，写出想查的对象、日期和范围，再把查询结果与表格筛选核对。",input:"业务数据表、字段口径、查询范围",validate:"数据来源、数值计算和更新时间",metric:"查询正确率、响应时间"},
+      recognition:{demo:"准备一张无个人信息的票据或表单图片，提取日期、金额等明确字段，再对照原件逐格核实。",input:"清晰图片/文件、目标字段",validate:"字段逐项准确率、漏识别和需人工复核的比例",metric:"字段准确率、单件处理时间"},
+      analysis:{demo:"用公开或模拟的两期业务报表，先算出变化，再请 AI 整理可能的影响因素，并标注哪些还需查证。",input:"前后两期数据、指标定义",validate:"结果能否复算、是否把相关性误写成原因",metric:"指标复算一致率、分析耗时"},
+      relation:{demo:"虚构几组“客户—订单—商品”等关联记录，先画出关系，再查询一处变化可能影响哪些对象。",input:"对象清单、实体编号、关联记录",validate:"关系来源、连接路径与遗漏关系",metric:"路径证据准确率、漏关联率"},
+      review:{demo:"用几条公开规则和虚构申请单做一次预审，列出通过项、缺失项与例外情况；不作正式审批。",input:"检查规则、样例材料、版本",validate:"漏检与误报、适用条款是否正确",metric:"漏审率、误报率、复核时间"},
+      matching:{demo:"准备几条虚构的需求和供给记录，写出资格门槛与匹配条件，再比较推荐结果及其理由。",input:"两侧对象数据、硬性条件、匹配标准",validate:"硬性门槛是否满足、推荐理由是否有证据",metric:"匹配准确率、人工筛选时间"},
+      prediction:{demo:"用一组公开或模拟的历史序列做简单趋势基线，再探索预测区间；对照历史回测，不把模拟值当真实预测。",input:"历史序列、预测期限、影响因素",validate:"回测误差、数据变化时是否失效",metric:"回测误差、偏差区间"},
+      optimization:{demo:"设置几项任务、资源和不可违反的约束，列出两三套可行方案，逐项检查冲突与成本。",input:"任务、资源、限制条件、评价目标",validate:"硬约束有无冲突、方案成本和可执行性",metric:"可行方案比例、冲突数、规划耗时"},
+      generation:{demo:"明确要写的内容和目标读者，提供公开事实与样例，让 AI 起草，然后逐条检查事实与格式。",input:"写作目标、参考资料、模板",validate:"事实准确、引用真实、是否符合格式要求",metric:"初稿耗时、人工修改比例"},
+      process:{demo:"画出一个有三到五个步骤的虚构业务流程，标出触发条件、输入、输出和异常时转给谁。",input:"步骤清单、判断条件、角色职责",validate:"异常分支是否齐全、是否可回退",metric:"流程耗时、异常处理比例"},
+      task_execution:{demo:"只选一个可撤销的低风险模拟任务，预先规定工具权限、执行步数和停止条件，再逐步核查操作记录。",input:"模拟任务、工具权限、终止条件",validate:"执行记录、误操作、是否可停止和回退",metric:"任务成功率、人工接管率"}
+    };
+    function starterPatternFor(scene) {
+      var ids=scene.solutionPatternIds||[];
+      // Prefer a task-specific method to a generic knowledge retrieval label.
+      var preferred=["optimization","prediction","review","matching","recognition","relation","data_query","task_execution","process","analysis","generation","knowledge_qa"];
+      var name=String(scene.name||"");
+      if(/问答|知识查询|制度查询|检索|知识助手/.test(name)&&ids.indexOf("knowledge_qa")>=0)return "knowledge_qa";
+      if(/起草|生成|摘要|创作|报告/.test(name)&&ids.indexOf("generation")>=0)return "generation";
+      if(/分类|识别|提取|解析/.test(name)&&ids.indexOf("recognition")>=0)return "recognition";
+      for(var i=0;i<preferred.length;i++)if(ids.indexOf(preferred[i])>=0)return preferred[i];
+      return "process";
+    }
+    function starterSteps(data,scene,patternKey) {
       var tasks=data&&Array.isArray(data.tasks)?data.tasks:[];
       if(tasks.length){
-        var first=tasks[0], last=tasks[tasks.length-1];
-        var middle=tasks.find(function(task,index){
+        var mid=tasks.find(function(task,index){
           if(index===0||index===tasks.length-1)return false;
-          var owner=String(task.owner||"");
-          return /AI|模型|智能|检索/.test(owner)||(task.techIds||[]).some(function(id){return /llm|rag|agent|extract|asr|ocr|workflow/.test(String(id));});
+          return /AI|模型|智能|检索/.test(String(task.owner||""))||(task.techIds||[]).some(function(id){return /llm|rag|agent|extract|asr|ocr|workflow|optimization/.test(String(id));});
         })||tasks[Math.floor(tasks.length/2)];
-        var indices=[first,middle,last].filter(function(task,index,arr){return task&&arr.indexOf(task)===index;});
-        return indices.map(function(task){return starterSnippet(task.name,30);}).filter(Boolean);
+        return [tasks[0],mid,tasks[tasks.length-1]].filter(function(task,index,array){return task&&array.indexOf(task)===index;}).map(function(task){
+          var action=starterSnippet(task.action||task.detail,64);
+          return String(task.name||"处理任务")+"："+(action||starterSnippet(task.input,55)||"依照现有流程完成并留存依据");
+        });
       }
-      var source=data&&Array.isArray(data.path)?data.path:Array.isArray(scene.path)?scene.path:[];
-      if(source.length){
-        var selected=[source[0],source[Math.floor(source.length/2)],source[source.length-1]];
-        return selected.map(function(x){return starterSnippet(Array.isArray(x)?x[0]:x,39);}).filter(function(s,i,a){return s&&a.indexOf(s)===i;});
+      var path=data&&Array.isArray(data.path)?data.path:Array.isArray(scene.path)?scene.path:[];
+      if(path.length){
+        return [path[0],path[Math.floor(path.length/2)],path[path.length-1]].map(function(raw){
+          return starterSnippet(Array.isArray(raw)?raw[0]:raw,74);
+        }).filter(function(value,index,all){return value&&all.indexOf(value)===index;});
       }
-      return [];
+      var pattern=patternLearning[patternKey];
+      if(pattern&&Array.isArray(pattern.actions)&&pattern.actions.length){
+        return pattern.actions.map(function(action,index){
+          var note=index===0?"围绕「"+scene.name+"」":index===1?"针对该业务任务":"核验「"+scene.name+"」的结果";
+          return note+"，"+action;
+        });
+      }
+      return ["明确「"+scene.name+"」的输入材料与要解决的问题","用脱敏或模拟材料做一次处理并记录过程","由业务人员核对输出，再决定是否适合扩大使用"];
+    }
+    function starterSensitive(scene,domain) {
+      return /医疗|临床|诊断|法律|法务|合规|财务|薪酬|信贷|保险|安全|车辆|工控|应急|公共安全|审批|招聘|用药|治疗|设备控制|报警|调度/.test(String(scene.name)+" "+String(domain.name));
     }
     function appendStarterGuide(inner,data,scene,line,domain) {
+      var patternKey=starterPatternFor(scene);
+      var profile=starterPatterns[patternKey]||starterPatterns.process;
+      var model=patternLearning[patternKey]||{};
+      var highRisk=starterSensitive(scene,domain);
+
       var quick=textModule("一分钟说清怎么做");
       quick.classList.add("starter-quick");
+      var shortIntro=el("p","starter-summary");
+      shortIntro.textContent="这个场景要做的是「"+scene.name+"」。"+(data&&data.ai?starterSnippet(data.ai,88):
+          "先围绕「"+line.name+"」准备可核验的输入，用合适的业务规则或 AI 方法处理，最后检查结果是否能用于实际工作。");
+      quick.append(shortIntro);
       var list=el("ol","starter-step-list");
-      var steps=starterSteps(data,scene);
-      if(steps.length){
-        steps.forEach(function(step){list.append(el("li","",step));});
-      } else {
-        list.append(el("li","","确认「"+scene.name+"」对应的输入资料与要解决的问题。"));
-        list.append(el("li","","用一份经授权的脱敏样例，尝试完成单次任务并保留原始结果。"));
-        list.append(el("li","","人工对照原流程核实效果，再决定是否值得进一步研究。"));
-      }
+      starterSteps(data,scene,patternKey).forEach(function(step){list.append(el("li","",step));});
       quick.append(list);
-      var evidence=el("p","starter-evidence",data?"以下步骤提炼自本场景的方案与任务拆解；具体企业仍需验证。":"入门建议 · 本场景方案待深化，以下并非已验证的实施流程。");
-      quick.append(evidence);
+      quick.append(el("p","starter-evidence",data?
+        "依据本场景已有方案与任务拆解提炼，属于实施建议；不能据此认为已在企业完成部署。":
+        "入门理解版：参考同类解决模式归纳；该场景详细方案尚未深化，实际流程需业务访谈后确认。"));
       inner.append(quick);
 
-      var roles=textModule("不同角色，怎么开始");
+      var roles=textModule("员工能试什么 · 公司要准备什么 · 人要负责什么");
       roles.classList.add("starter-roles");
       var employee=el("div","starter-role-card starter-person");
-      employee.append(el("div","starter-role-kicker","普通员工 · 今天可以试"));
-      var employeeText="找一份可公开或经授权的脱敏样例，尝试「"+scene.name+"」；对照原流程检查结果、记录耗时与明显错误。正式业务数据、客户信息不要直接输入未经批准的工具。";
-      if(scene.summary){
-        employeeText="先选一份脱敏样例，围绕「"+scene.name+"」试做一轮。"+starterSnippet(scene.summary,58)+"；由自己对照原材料核实，不直接用于正式决策。";
-      }
-      employee.append(el("p","",employeeText));
+      employee.append(el("div","starter-role-kicker","普通员工 | 自己先试"));
+      var employeeDesc=profile.demo;
+      if(highRisk)employeeDesc="这类业务有较高风险，先用完全虚构的样例理解流程，不操作真实客户、诊疗、财务、安全或审批数据。"+profile.demo;
+      employee.append(el("p","",employeeDesc));
 
       var leader=el("div","starter-role-card starter-leader");
-      leader.append(el("div","starter-role-kicker","部门负责人 · 判断是否值得改"));
-      var prereq=data&&data.prereq?starterSnippet(data.prereq,95):"公司需先确认数据从哪里来、谁有访问权限、现有系统能否提供接口或可控导出";
-      var metric=data&&data.value&&Array.isArray(data.value.metrics)&&data.value.metrics.length?starterSnippet(data.value.metrics[0],70):"人工耗时、准确性与异常处理量";
-      leader.append(el("p","","公司需提供："+prereq+"。先选一类高频任务试点，对照「"+metric+"」评估，再决定是否接入现有流程。"));
+      leader.append(el("div","starter-role-kicker","部门负责人 | 决定怎么试点"));
+      var prerequisites=data&&data.prereq?starterSnippet(data.prereq,112):
+        (model.knowledge||"确认数据来源和字段定义")+"；"+(model.systems||"确认系统接口、业务权限与流程负责人");
+      var metric=data&&data.value&&data.value.metrics&&data.value.metrics.length?starterSnippet(data.value.metrics[0],74):profile.metric;
+      leader.append(el("p","","公司需要："+prerequisites+"。先用少量授权样例测「"+metric+"」，对照人工基线，再决定是否接入正式系统。"));
 
       var human=el("div","starter-role-card starter-human");
-      human.append(el("div","starter-role-kicker","必须由人负责 · 审核与拍板"));
-      var boundary=data&&data.boundary?starterSnippet(data.boundary,114):
-        "由业务人员核对事实、适用规则与实际后果；涉及审批、客户权益、资金、安全或合规的结论，必须由有权限的责任人确认";
-      human.append(el("p","",boundary+"。模型建议不能直接替代正式审批或业务责任。"));
+      human.append(el("div","starter-role-kicker","必须由人负责 | 风险与最终确认"));
+      var humanLine=data&&data.boundary?starterSnippet(data.boundary,124):model.human||"由负责人员确认业务事实与适用性，错误或证据不足时退回人工处理";
+      human.append(el("p","",humanLine+"。AI 或算法的候选结果不能代替授权人员的最终判断。"));
 
-      var roleCards=el("div","starter-role-grid");
-      roleCards.append(employee,leader,human);
-      roles.append(roleCards);
+      var cards=el("div","starter-role-grid");
+      cards.append(employee,leader,human);
+      roles.append(cards);
       inner.append(roles);
     }
     function renderSolutionPanel() {
