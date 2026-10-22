@@ -30,7 +30,7 @@ const response=await fetch("https://api.cloudflare.com/client/v4/graphql",{
     query,
     variables:{
       accountTag:id,
-      filter:{requestHost:hostname,datetime_geq:from.toISOString(),datetime_leq:now.toISOString()}
+      filter:{siteTag,datetime_geq:from.toISOString(),datetime_leq:now.toISOString()}
     }
   })
 });
@@ -41,18 +41,24 @@ const accounts=(body.data&&body.data.viewer&&body.data.viewer.accounts)||[];
 if(accounts.length!==1)throw Error("Unexpected account count: "+accounts.length);
 const rows=accounts[0].rumPageloadEventsAdaptiveGroups;
 if(!Array.isArray(rows))throw Error("Cloudflare returned no valid RUM dataset.");
-// RUM siteTag can differ between an embedded beacon and the Analytics property.
-// Filter by the exact public site hostname; do not silently exclude valid host traffic
-// because of a mismatched siteTag. If results stay empty, inspect Cloudflare's
-// Web Analytics property and its observed requestHost before changing secrets.
-console.log("RUM groups matching host "+hostname+": "+rows.length);
+// Query by the Web Analytics property tag, then validate observed hostnames.
+const observedHosts=new Map();
+for(const row of rows){
+ const host=String(row.dimensions?.requestHost||"(missing)").toLowerCase();
+ observedHosts.set(host,(observedHosts.get(host)||0)+Number(row.count||0));
+}
+console.log("RUM groups for Web Analytics property: "+rows.length);
+console.log("RUM host distribution: "+JSON.stringify(Object.fromEntries(observedHosts)));
 if(rows.length===0){
- console.warn("No RUM pageviews matched this hostname. Cloudflare may be tracking another hostname or an older property. Verify the Web Analytics site's domain and its beacon site tag against "+siteTag+".");
+ console.warn("No RUM events returned for this siteTag; verify the beacon token against Cloudflare Web Analytics > JS Snippet installation.");
+}
+if(rows.length>0 && !observedHosts.has(hostname)){
+ console.warn("RUM returned events, but none for "+hostname+"; check hostnames printed above.");
 }
 if(rows.length>=5000)throw Error("5000 group limit reached; refusing incomplete data.");
 const byDate=new Map(),byPath=new Map();
 for(const row of rows){
- if(!row.dimensions||row.dimensions.requestHost!==hostname)continue;
+ if(!row.dimensions||String(row.dimensions.requestHost||"").toLowerCase()!==hostname)continue;
  const date=row.dimensions.date, count=Number(row.count||0);
  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(count)||count<0)continue;
  byDate.set(date,(byDate.get(date)||0)+count);
