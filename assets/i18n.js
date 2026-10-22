@@ -448,6 +448,6 @@ window.LIA_TRANSLATIONS = {
   "解决方案 · 售前支持 · 产品经理 · 业务型 FDE · 企业内部提效": "Solutions · Presales Support · Product Manager · Business-oriented FDE · Internal Productivity",
   "某三甲设计院": "Architecture design institute (anonymized)",
   "某文化创意公司": "Cultural & creative company (anonymized)",
-  "正在找工作，谁来捞捞我？😭😄🌹": "Looking for a job — who's going to hire me? 😭😄🌹",
+  "正在找工作，欢迎联系我～": "I'm currently looking for work — feel free to get in touch.",
   "某上市开发集团": "Listed property development group (anonymized)"
 };
