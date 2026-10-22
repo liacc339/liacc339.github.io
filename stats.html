@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Stats · Lia Chen</title>
+<meta name="description" content="Lia Chen 个人网站的访问统计。">
+<style>
+:root{--ink:#173049;--muted:#728293;--blue:#097ba5;--line:#e3e8ed;--bg:#f6f8f9;--paper:#fff;--tint:#ecf5f8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Microsoft YaHei","PingFang SC",sans-serif}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--blue)}
+.wrap{width:min(1030px,calc(100% - 38px));margin:auto}
+header{border-bottom:1px solid var(--line);background:var(--paper)}
+.nav{height:70px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:760;letter-spacing:-.025em;font-size:17px}.brand span{color:var(--blue)}
+.back{font-size:13px;color:var(--muted)}
+main{padding:48px 0 68px}
+.kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.16em;font-family:Consolas,monospace}
+h1{font-size:clamp(27px,4vw,37px);line-height:1.35;margin:9px 0 9px;letter-spacing:-.025em}
+.intro{font-size:14px;color:var(--muted);max-width:660px;margin:0 0 23px}
+.status{min-height:24px;font-size:12px;color:var(--muted);margin-bottom:17px}
+.status.error{color:#a04f35}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 19px;min-height:135px}
+.card-label{color:var(--muted);font-size:12px}
+.big{font-size:clamp(23px,3vw,33px);font-weight:770;letter-spacing:-.045em;line-height:1.35;margin-top:13px;font-variant-numeric:tabular-nums}
+.card-foot{font-size:11px;color:var(--muted);margin-top:3px}
+.columns{display:grid;grid-template-columns:1.25fr 1fr;gap:15px;margin-top:18px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 24px;min-width:0}
+.panel h2{margin:0 0 14px;font-size:16px}
+.chart-wrap{height:190px;display:flex;align-items:end;gap:4px;border-bottom:1px solid var(--line);padding:8px 0}
+.bar{flex:1;max-height:100%;min-height:2px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#4bb1ce,#166b92);opacity:.8;position:relative}
+.bar:hover{opacity:1}
+.bar[title="0"]{background:#edf1f4;opacity:1}
+.axis{display:flex;justify-content:space-between;color:var(--muted);font:11px/1.6 Consolas,monospace;margin-top:8px}
+.empty{color:var(--muted);font-size:13px;line-height:1.9}
+.top-list{list-style:none;margin:0;padding:0}
+.top-list li{display:flex;align-items:start;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid #eef1f3;font-size:13px}
+.top-list li:last-child{border-bottom:0}
+.top-name{min-width:0;overflow-wrap:anywhere;color:#3d5469}
+.top-value{font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}
+.notice{margin-top:20px;border:1px solid #dbe8ef;background:var(--tint);border-radius:12px;padding:18px 21px}
+.notice h2{margin:0 0 7px;font-size:15px}
+.notice p{font-size:13px;margin:7px 0;color:#47647a}
+.notice ol{margin:7px 0;padding-left:23px;font-size:13px;color:#47647a}
+.notice a{color:#056f96;text-decoration:underline;text-underline-offset:3px}
+.notice code{background:#fff;border:1px solid #d7e3ea;padding:1px 5px;border-radius:4px;font-size:12px;overflow-wrap:anywhere}
+.smallprint{margin-top:16px;font-size:11px;color:var(--muted)}
+.footer{border-top:1px solid var(--line);padding:19px 0 32px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:12px}
+@media(max-width:790px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.columns{grid-template-columns:1fr}.panel{padding:19px}.card{padding:16px}}
+@media(max-width:430px){.wrap{width:calc(100% - 28px)}main{padding-top:31px}.big{font-size:26px}.footer{flex-direction:column}.nav{height:62px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="index.html"><span>liachen</span>@notes:~$</a><a class="back" href="contact.html">← 返回个人履历</a></div></header>
+<main class="wrap">
+  <div class="kicker">PERSONAL SITE / ANALYTICS</div>
+  <h1>我的网站，有谁来过？</h1>
+  <p class="intro">这里记录个人主页与项目作品的浏览情况。只展示汇总统计，不追踪具体访客身份。</p>
+  <div id="status" class="status" role="status">正在读取统计数据…</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">今日浏览量</div><div id="today" class="big">—</div><div class="card-foot">按 UTC 日期 · PV</div></div>
+    <div class="card"><div class="card-label">最近 7 天浏览量</div><div id="week" class="big">—</div><div class="card-foot">最近 7 个 UTC 自然日</div></div>
+    <div class="card"><div class="card-label">最近 30 天浏览量</div><div id="month" class="big">—</div><div class="card-foot">最近 30 个 UTC 自然日</div></div>
+    <div class="card"><div class="card-label">平均有效阅读时长</div><div id="readTime" class="big">待接入</div><div class="card-foot">需独立的阅读行为采集</div></div>
+  </div>
+  <div class="columns">
+    <section class="panel"><h2>近 30 天浏览趋势</h2><div class="chart-wrap" id="trend"><p class="empty">尚无可展示的数据</p></div><div class="axis"><span id="startDate">—</span><span id="endDate">—</span></div></section>
+    <section class="panel"><h2>大家更喜欢看什么？</h2><ol class="top-list" id="topPages"><li class="empty">等待统计数据</li></ol></section>
+  </div>
+  <section class="notice" id="setup">
+    <h2>一次性连接 Cloudflare，之后直接从本站查看</h2>
+    <p>Cloudflare 已经在网站收集浏览数据，但 GitHub Pages 无法直接读取私人统计接口。为避免公开 API 密钥，需要先开启一次自动汇总。</p>
+    <ol>
+      <li>在 <a href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener noreferrer">Cloudflare API Tokens</a> 创建仅有 <b>Account → Account Analytics → Read</b> 权限的令牌。</li>
+      <li>在 <a href="https://github.com/liacc339/liacc339.github.io/settings/secrets/actions" target="_blank" rel="noopener noreferrer">GitHub 仓库 → Actions secrets</a> 添加两个 Repository secrets：<code>CF_ACCOUNT_ID</code>（Cloudflare 账户 ID）和 <code>CF_API_TOKEN</code>（刚才生成的令牌）。</li>
+      <li>打开 <a href="https://github.com/liacc339/liacc339.github.io/actions/workflows/site-stats.yml" target="_blank" rel="noopener noreferrer">网站统计自动更新</a>，点击 <b>Run workflow</b> 首次运行。此后每天自动同步。</li>
+    </ol>
+    <p><b>不要</b>把 API 令牌发到聊天、写进网页代码，或上传到公开仓库。</p>
+  </section>
+  <p class="smallprint">访问量为浏览器统计，可能受广告拦截与 Cloudflare 抽样影响；PV 不等于独立访客数。本站公开展示的汇总数据不包含个人信息。平均阅读时长尚未采集，不能用加载时间冒充。</p>
+</main>
+<footer><div class="wrap footer"><span>© Lia Chen · Site notes</span><a href="https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fweb-analytics" target="_blank" rel="noopener noreferrer">Cloudflare 原始统计 ↗</a></div></footer>
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var fmt=function(n){return Number(n||0).toLocaleString("zh-CN");};
+  function render(d){
+    if(!d || d.status!=="ok" || !Array.isArray(d.daily)){return false;}
+    var daily=d.daily.slice(-30);
+    var sum=function(xs){return xs.reduce(function(a,r){return a+Number(r.views||0);},0);};
+    var nowUtc=(new Date()).toISOString().slice(0,10);
+    var today=daily.filter(function(x){return x.date===nowUtc;});
+    $("today").textContent=fmt(sum(today));
+    $("week").textContent=fmt(sum(daily.slice(-7)));
+    $("month").textContent=fmt(sum(daily));
+    $("readTime").textContent="未采集";
+    $("status").textContent="最近更新："+new Date(d.updatedAt).toLocaleString("zh-CN")+" · 数据来源：Cloudflare Web Analytics · 约每日更新";
+    $("setup").hidden=true;
+    var max=Math.max(1,...daily.map(function(x){return Number(x.views||0);}));
+    $("trend").replaceChildren();
+    daily.forEach(function(item){
+      var bar=document.createElement("div");
+      bar.className="bar";bar.style.height=Math.max(2,(Number(item.views||0)/max)*100)+"%";
+      bar.title=item.date+"："+fmt(item.views)+" 次浏览";
+      bar.setAttribute("aria-label",bar.title);
+      $("trend").appendChild(bar);
+    });
+    if(daily.length){$("startDate").textContent=daily[0].date.slice(5);$("endDate").textContent=daily[daily.length-1].date.slice(5);}
+    $("topPages").replaceChildren();
+    var pages=Array.isArray(d.pages)?d.pages.slice(0,9):[];
+    if(!pages.length){var p=document.createElement("li");p.className="empty";p.textContent="目前没有页面排行数据";$("topPages").appendChild(p);}
+    pages.forEach(function(item){
+      var li=document.createElement("li"),name=document.createElement("span"),val=document.createElement("span");
+      name.className="top-name";name.textContent=item.path||"/";val.className="top-value";val.textContent=fmt(item.views);
+      li.append(name,val);$("topPages").appendChild(li);
+    });
+    return true;
+  }
+  fetch("data/site-stats.json?cache="+Date.now(),{cache:"no-store"}).then(function(res){if(!res.ok)throw Error("数据源尚未建立");return res.json();}).then(function(data){
+    if(!render(data)){$("status").textContent="统计面板已建立，等待一次性连接 Cloudflare 数据源。";}
+  }).catch(function(e){$("status").className="status error";$("status").textContent="暂时无法获取数据："+e.message;});
+})();
+</script>
+</body>
+</html>
