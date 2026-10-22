@@ -12,7 +12,7 @@ const token=(process.env.CF_API_TOKEN||"").trim();
 if(!id||!token){console.error("Missing CF_ACCOUNT_ID or CF_API_TOKEN secrets.");process.exit(2);}
 if(!/^[a-fA-F0-9]{32}$/.test(id)){console.error("CF_ACCOUNT_ID must be 32 hex chars.");process.exit(2);}
 const now=new Date();
-const from=new Date(now.getTime()-32*86400000);
+const from=new Date(new Date(now.toISOString().slice(0,10)+"T00:00:00.000Z").getTime()-29*86400000);
 const query=[
  "query Dashboard($accountTag:string,$filter:AccountRumPageloadEventsAdaptiveGroupsFilter_InputObject){",
  "  viewer { accounts(filter:{accountTag:$accountTag}) {",
