@@ -30,7 +30,7 @@ const response=await fetch("https://api.cloudflare.com/client/v4/graphql",{
     query,
     variables:{
       accountTag:id,
-      filter:{siteTag,requestHost:hostname,datetime_geq:from.toISOString(),datetime_leq:now.toISOString()}
+      filter:{requestHost:hostname,datetime_geq:from.toISOString(),datetime_leq:now.toISOString()}
     }
   })
 });
@@ -41,6 +41,14 @@ const accounts=(body.data&&body.data.viewer&&body.data.viewer.accounts)||[];
 if(accounts.length!==1)throw Error("Unexpected account count: "+accounts.length);
 const rows=accounts[0].rumPageloadEventsAdaptiveGroups;
 if(!Array.isArray(rows))throw Error("Cloudflare returned no valid RUM dataset.");
+// RUM siteTag can differ between an embedded beacon and the Analytics property.
+// Filter by the exact public site hostname; do not silently exclude valid host traffic
+// because of a mismatched siteTag. If results stay empty, inspect Cloudflare's
+// Web Analytics property and its observed requestHost before changing secrets.
+console.log("RUM groups matching host "+hostname+": "+rows.length);
+if(rows.length===0){
+ console.warn("No RUM pageviews matched this hostname. Cloudflare may be tracking another hostname or an older property. Verify the Web Analytics site's domain and its beacon site tag against "+siteTag+".");
+}
 if(rows.length>=5000)throw Error("5000 group limit reached; refusing incomplete data.");
 const byDate=new Map(),byPath=new Map();
 for(const row of rows){
