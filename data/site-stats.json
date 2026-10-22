@@ -1,0 +1,9 @@
+{
+  "status": "awaiting_connection",
+  "updatedAt": null,
+  "timezone": "UTC",
+  "source": "Cloudflare Web Analytics",
+  "daily": [],
+  "pages": [],
+  "note": "Connect CF_ACCOUNT_ID and CF_API_TOKEN repository secrets, then run workflow."
+}
